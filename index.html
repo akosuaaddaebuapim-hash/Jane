@@ -27,8 +27,21 @@
       position: absolute;
       left: 0; top: 0;
       width: 100%; height: 100%;
+      background: url("images/bg-pattern.png") center/360px repeat;
       opacity: 0.12;
       z-index: 0;
+      pointer-events: none;
+    }
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 116px;
+      width: 112px;
+      height: 112px;
+      transform: translateX(-50%);
+      background: url("images/dod-seal.png") center/contain no-repeat;
+      opacity: 0.16;
+      z-index: 1;
       pointer-events: none;
     }
     .id-header {
@@ -71,6 +84,17 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    .hologram {
+      position: absolute;
+      left: 38px;
+      top: 128px;
+      width: 44px;
+      height: 44px;
+      background: url("images/hologram.png") center/cover no-repeat;
+      opacity: 0.33;
+      z-index: 3;
+      pointer-events: none;
     }
     .main-info {
       position: absolute;
@@ -159,6 +183,19 @@
       object-fit: contain;
       border-radius: 3px;
     }
+    .barcode {
+      position: absolute;
+      left: 22px;
+      bottom: 18px;
+      width: 160px;
+      height: 32px;
+      z-index: 3;
+    }
+    .barcode img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
     .laminate-section {
       position: absolute;
       left: 186px;
@@ -176,6 +213,23 @@
       color: #4a5562;
       font-weight: 600;
       box-shadow: 0 2px 6px rgba(44,60,90,0.09);
+      background-image: url("images/laminate-icon.png");
+      background-repeat: no-repeat;
+      background-position: center right;
+      background-size: 28px;
+    }
+    .signature {
+      position: absolute;
+      left: 22px;
+      bottom: 8px;
+      width: 160px;
+      height: 32px;
+      z-index: 3;
+    }
+    .signature img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     .id-footer {
       position: absolute;
@@ -196,25 +250,7 @@
 </head>
 <body>
   <div class="id-card">
-    <img src="images/watermark-eagle.png" class="id-bg" alt="DoD Watermark">
+    <div class="id-bg"></div>
+    <div class="seal"></div>
     <div class="id-header">
-      <span>Armed Forces of the United States</span>
-      <span class="expires">Expires<br>2025SEP30</span>
-    </div>
-    <div class="photo-box">
-      <img src="images/jane.jpg" alt="Jane Maunger Military ID Photo">
-    </div>
-    <div class="main-info">
-      <div class="row"><span class="label">Affiliation</span><span class="value">Contractor</span></div>
-      <div class="row"><span class="label">Rank</span><span class="value">CPT (O-3)</span></div>
-      <div class="row"><span class="label">Role</span><span class="value">Clinical Dietitian</span></div>
-      <div class="row"><span class="label">Location</span><span class="value">Fort Knox, Kentucky</span></div>
-      <div class="row"><span class="label">Agency</span><span class="value">U.S. Army Medical Command</span></div>
-      <div class="row"><span class="label">Personnel #</span><span class="value">RDN-19751010-01</span></div>
-      <div class="row"><span class="label">Privileges</span><span class="value">Medical Facility Access Only</span></div>
-      <div class="row"><span class="label">Patronage</span><span class="value">Commissary, MWR, Exchange</span></div>
-      <div class="agency">Geneva Conventions Identification Card</div>
-      <div class="sample">SAMPLE</div>
-    </div>
-    <div class="name-section">
-      <div class="
+      <
