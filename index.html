@@ -29,17 +29,12 @@
       box-sizing: border-box;
       gap: 15px;
     }
-    .bg-pattern {
+    .watermark-army {
       position: absolute;
       inset: 0;
-      background: url("images/bg-pattern.png") center/360px repeat;
-      opacity: 0.12;
-      z-index: 1;
-    }
-    .watermark {
-      position: absolute;
-      inset: 0;
-      background: url("images/watermark-eagle.png") center/contain no-repeat;
+      background: url("images/watermark-eagle.png") center/contain no-repeat, repeating-linear-gradient(-45deg, rgba(59, 73, 94, 0.05), rgba(59, 73, 94, 0.05) 5px, transparent 5px, transparent 10px);
+      background-position: center;
+      background-size: 80%, 10px 10px;
       opacity: 0.18;
       z-index: 2;
     }
@@ -140,16 +135,13 @@
 </head>
 <body>
   <div class="id-card">
-    <div class="bg-pattern"></div>
-    <div class="watermark"></div>
-
+    <div class="watermark-army"></div>
     <div class="photo-container">
       <div class="photo">
         <img src="images/jane.jpg" alt="Jane Maunger" />
       </div>
       <div class="hologram"></div>
     </div>
-
     <div class="info">
       <div class="row"><span class="label">Name:</span> <span class="value">MAUNGER, JANE</span></div>
       <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian</span></div>
@@ -159,7 +151,6 @@
       <div class="row"><span class="label">Expiration:</span> <span class="value">2027SEP30</span></div>
       <div class="row"><span class="label">Patronage:</span> <span class="value">Medical Facility Access Only</span></div>
     </div>
-
     <div class="bottom-section">
       <div class="signature">
         <img src="images/signature-jane.png" alt="Signature" />
