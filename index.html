@@ -97,6 +97,32 @@
       opacity: 0.33;
       z-index: 6;
     }
+    .signature {
+      position: absolute;
+      left: 20px;
+      bottom: 18px;
+      width: 90px;
+      height: 32px;
+      z-index: 7;
+    }
+    .signature img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .barcode {
+      position: absolute;
+      left: 120px;
+      bottom: 18px;
+      width: 160px;
+      height: 32px;
+      z-index: 7;
+    }
+    .barcode img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
     .qr {
       position: absolute;
       right: 18px;
@@ -107,7 +133,7 @@
       border-radius: 6px;
       border: 1.3px solid #ccd3e3;
       box-shadow: 0 2px 8px rgba(44,60,90,0.08);
-      z-index: 7;
+      z-index: 8;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -121,13 +147,13 @@
     .laminate {
       position: absolute;
       left: 186px;
-      bottom: 22px;
+      bottom: 64px;
       width: 92px;
       height: 36px;
       background: #f5f7fa;
       border: 1.2px solid #bcc7d8;
       border-radius: 8px;
-      z-index: 8;
+      z-index: 9;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -160,6 +186,12 @@
       <div class="row"><span class="label">Expiration Date:</span> <span class="value">25 SEP 2025</span></div>
       <div class="row"><span class="label">DoD ID Number:</span> <span class="value">RDN-19751010-01</span></div>
       <div class="row"><span class="label">Privileges:</span> <span class="value">Medical Facility Access Only</span></div>
+    </div>
+    <div class="signature">
+      <img src="images/signature-jane.png" alt="Signature" />
+    </div>
+    <div class="barcode">
+      <img src="images/barcode-jane.png" alt="Barcode" />
     </div>
     <div class="qr">
       <img src="images/qr-jane.png" alt="QR Code" />
