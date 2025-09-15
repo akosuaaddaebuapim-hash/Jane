@@ -2,133 +2,282 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jane Maunger Military ID Card</title>
+  <title>Military ID Card - Jane Maunger</title>
+  <meta name="viewport" content="width=480, initial-scale=1">
   <style>
     body {
-      background: #dbe6e4;
-      font-family: Arial, sans-serif;
+      background: #1b232e;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 40px;
+      align-items: flex-start;
+      padding: 40px 0;
+      font-family: Arial, 'Segoe UI', sans-serif;
     }
     .id-card {
+      width: 440px;
+      height: 270px;
+      background: #fbfbfb;
+      border: 2.5px solid #3b495e;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(21,40,68,0.16);
       position: relative;
-      width: 420px;
-      height: 260px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
       overflow: hidden;
-      padding: 0;
     }
-    .card-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      padding: 22px 28px 22px 22px;
-      box-sizing: border-box;
+    .id-bg {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      opacity: 0.18;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .us-seal {
+      position: absolute;
+      left: 180px; top: 34px;
+      width: 220px;
+      opacity: 0.22;
       z-index: 1;
+      pointer-events: none;
+    }
+    .id-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 22px 0 18px;
+      font-size: 1.04em;
+      font-weight: 600;
+      color: #28364a;
+      z-index: 2;
+      position: relative;
+    }
+    .id-header .expires {
+      background: #222e43;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 4px;
+      font-size: 1.1em;
+      padding: 4px 12px;
+      letter-spacing: 1px;
+      margin-left: 12px;
+      min-width: 110px;
+      text-align: center;
     }
     .photo-section {
-      position: relative;
-      float: left;
-      width: 140px;
-      height: 180px;
-      margin-right: 18px;
+      position: absolute;
+      top: 54px;
+      left: 20px;
+      width: 96px;
+      height: 130px;
+      z-index: 2;
+      background: #fff;
+      border: 1.3px solid #bbb;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(44,60,90,0.10);
     }
-    .id-photo {
+    .photo-section img {
       width: 100%;
       height: 100%;
-      border-radius: 8px;
       object-fit: cover;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.11);
-      position: relative;
-      z-index: 1;
     }
     .hologram {
       position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 70px;
+      left: 36px;
+      bottom: 46px;
+      width: 50px;
+      opacity: 0.35;
+      z-index: 3;
       pointer-events: none;
-      opacity: 0.4;
-      z-index: 2;
+      filter: blur(0.2px) brightness(1.12);
     }
     .info-section {
-      float: left;
-      width: 210px;
-      height: 180px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      position: absolute;
+      left: 132px;
+      top: 56px;
+      right: 22px;
+      font-size: 1.01em;
+      color: #232d36;
+      z-index: 2;
+      line-height: 1.32em;
     }
-    .info-section h2 {
-      margin: 0 0 6px 0;
-      font-size: 1.3em;
-      letter-spacing: 0.04em;
-      font-weight: 700;
-      color: #1a2e36;
+    .info-section .row {
+      display: flex;
+      margin-bottom: 3px;
     }
     .info-section .label {
+      width: 115px;
       font-weight: 600;
-      font-size: 0.98em;
-      color: #2e4c52;
+      color: #374b5e;
     }
     .info-section .value {
-      margin-bottom: 8px;
-      font-size: 0.97em;
-      color: #293a4c;
+      flex: 1;
+      font-weight: 500;
+      color: #222e43;
+    }
+    .info-section .agency {
+      margin-top: 2px;
+      font-weight: 600;
+      color: #314060;
+    }
+    .info-section .sample {
+      color: #e22;
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 0.14em;
+      opacity: 0.45;
+      margin: 16px 0 0 0;
+      user-select: none;
+    }
+    .name-section {
+      position: absolute;
+      left: 22px;
+      bottom: 52px;
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #13202d;
+      letter-spacing: 0.01em;
+      z-index: 2;
+      line-height: 1.09em;
+      text-shadow: 0 3px 7px #fff9;
+      width: 210px;
+    }
+    .name-section .surname {
+      font-size: 1em;
+      letter-spacing: 0.08em;
+    }
+    .name-section .given {
+      font-size: 0.98em;
+      letter-spacing: 0.04em;
     }
     .qr-section {
       position: absolute;
+      right: 18px;
       bottom: 18px;
-      right: 28px;
-      width: 80px;
-      height: 80px;
-      z-index: 3;
-    }
-    .qr-code {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 8px;
+      width: 64px;
+      height: 64px;
       background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-      padding: 4px;
+      border-radius: 6px;
+      border: 1.4px solid #ccd3e3;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(44,60,90,0.07);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .clearfix::after {
-      content: "";
-      display: table;
-      clear: both;
+    .qr-section img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border-radius: 3px;
+    }
+    .laminate-section {
+      position: absolute;
+      left: 188px;
+      bottom: 22px;
+      width: 92px;
+      height: 36px;
+      background: #f5f7fa;
+      border: 1.2px solid #bcc7d8;
+      border-radius: 7px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.02em;
+      color: #4a5562;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(44,60,90,0.09);
+    }
+    .laminate-section::before {
+      content: '';
+      display: block;
+      background: url('images/hologram.png') center center no-repeat;
+      background-size: 36px 36px;
+      width: 36px;
+      height: 36px;
+      opacity: 0.28;
+      position: absolute;
+      left: 4px;
+      top: 0;
+    }
+    .id-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 0.97em;
+      background: #e4e9f2;
+      color: #3c4d5c;
+      text-align: center;
+      padding: 4px 0 3px 0;
+      border-top: 1.3px solid #a6b1c7;
+      letter-spacing: 0.02em;
+      z-index: 5;
+    }
+    /* Responsive for mobile */
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+      }
+      .id-card {
+        width: 99vw;
+        height: auto;
+        min-height: 270px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="id-card">
-    <div class="card-content clearfix">
-      <!-- Photo and Hologram Overlay -->
-      <div class="photo-section">
-        <img src="images/jane.jpg" alt="Jane Maunger" class="id-photo">
-        <img src="images/hologram.png" alt="Security Hologram" class="hologram">
-      </div>
-      <!-- Info Section -->
-      <div class="info-section">
-        <h2>Jane Maunger</h2>
-        <div class="label">Rank:</div>
-        <div class="value">CPT (O-3)</div>
-        <div class="label">Title:</div>
-        <div class="value">Military Dietitian</div>
-        <div class="label">Personnel #:</div>
-        <div class="value">RDN-19751010-01</div>
-        <div class="label">Status:</div>
-        <div class="value">Active / Civilian Medical Staff</div>
-        <div class="label">Expires:</div>
-        <div class="value">25 SEP 2025</div>
-      </div>
-      <!-- QR Code Section -->
-      <div class="qr-section">
-        <img src="images/qr-jane.png" alt="QR Code" class="qr-code">
-      </div>
+    <!-- Watermark Eagle Background -->
+    <img src="images/watermark-eagle.png" class="id-bg" alt="Eagle Watermark">
+    <!-- Semi-transparent US Army Seal (optional for extra effect) -->
+    <img src="images/us-army-logo.png" class="us-seal" alt="US Army Logo Watermark">
+    <!-- Header -->
+    <div class="id-header">
+      <span>Armed Forces of the United States</span>
+      <span class="expires">
+        Expires<br>
+        2025SEP30
+      </span>
+    </div>
+    <!-- Photo -->
+    <div class="photo-section">
+      <img src="images/jane.jpg" alt="Jane Maunger Military ID Photo">
+      <!-- Hologram Overlay -->
+      <img src="images/hologram.png" class="hologram" alt="Hologram Overlay">
+    </div>
+    <!-- Main Info -->
+    <div class="info-section">
+      <div class="row"><span class="label">Affiliation</span><span class="value">Contractor</span></div>
+      <div class="row"><span class="label">Role</span><span class="value">Contact Dietician</span></div>
+      <div class="row"><span class="label">State</span><span class="value">Kentucky</span></div>
+      <div class="row"><span class="label">Rank</span><span class="value">CPT (O-3)</span></div>
+      <div class="row"><span class="label">Agency / Department</span><span class="value">Army Medical Command</span></div>
+      <div class="row"><span class="label">Authorized Patronage</span><span class="value">Commissary, MWR, Unlimited Exchange</span></div>
+      <div class="row agency">Geneva Conventions Identification Card</div>
+      <div class="sample">SAMPLE</div>
+    </div>
+    <!-- Name -->
+    <div class="name-section">
+      <div class="surname">MAUNGER</div>
+      <div class="given">JANE</div>
+    </div>
+    <!-- QR Code -->
+    <div class="qr-section">
+      <img src="images/qr-jane.png" alt="QR Code">
+    </div>
+    <!-- Laminate Section -->
+    <div class="laminate-section">
+      Laminate Cutout
+    </div>
+    <!-- Footer -->
+    <div class="id-footer">
+      &copy; 2025 U.S. ARMY &nbsp;•&nbsp; OFFICIAL IDENTIFICATION
     </div>
   </div>
 </body>
