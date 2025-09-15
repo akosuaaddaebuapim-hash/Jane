@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Military ID Card - Jane Maunger</title>
-  <meta name="viewport" content="width=480, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       background: #202b37;
-      min-height: 100vh;
+      font-family: Arial, 'Segoe UI', Verdana, sans-serif;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       padding: 40px 0;
-      font-family: Arial, 'Segoe UI', Verdana, sans-serif;
     }
     .id-card {
       width: 448px;
@@ -28,7 +27,7 @@
       position: absolute;
       left: 0; top: 0;
       width: 100%; height: 100%;
-      opacity: 0.17;
+      opacity: 0.12;
       z-index: 0;
       pointer-events: none;
     }
@@ -49,7 +48,7 @@
       font-weight: 700;
       border-radius: 4px;
       font-size: 1.04em;
-      padding: 4px 12px 3px 12px;
+      padding: 4px 12px;
       letter-spacing: 1px;
       min-width: 112px;
       text-align: center;
@@ -67,43 +66,29 @@
       overflow: hidden;
       z-index: 2;
       box-shadow: 0 2px 8px rgba(44,60,90,0.10);
-      display: flex;
-      align-items: end;
-      justify-content: center;
     }
     .photo-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    .hologram {
-      position: absolute;
-      left: 38px;
-      bottom: 54px;
-      width: 44px;
-      opacity: 0.33;
-      z-index: 3;
-      pointer-events: none;
-    }
     .main-info {
       position: absolute;
       left: 126px;
       top: 58px;
       right: 22px;
-      font-size: 0.99em;
+      font-size: 0.96em;
       color: #1a2630;
       z-index: 2;
-      line-height: 1.32em;
-      background: transparent;
-      padding-bottom: 7px;
+      line-height: 1.4em;
     }
     .main-info .row {
       display: flex;
-      margin-bottom: 1px;
-      font-size: 0.98em;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
     }
     .main-info .label {
-      width: 110px;
+      width: 120px;
       font-weight: 600;
       color: #314060;
       flex-shrink: 0;
@@ -115,18 +100,18 @@
       word-break: break-word;
     }
     .main-info .agency {
-      margin-top: 3px;
+      margin-top: 6px;
       font-weight: 600;
       color: #184099;
       font-size: 0.98em;
     }
     .main-info .sample {
       color: #cf2525;
-      font-size: 1.7em;
+      font-size: 1.6em;
       font-weight: bold;
       letter-spacing: 0.13em;
       opacity: 0.42;
-      margin: 15px 0 0 0;
+      margin-top: 10px;
       user-select: none;
     }
     .name-section {
@@ -192,18 +177,6 @@
       font-weight: 600;
       box-shadow: 0 2px 6px rgba(44,60,90,0.09);
     }
-    .laminate-section::before {
-      content: '';
-      display: block;
-      background: url('images/hologram.png') center center no-repeat;
-      background-size: 36px 36px;
-      width: 36px;
-      height: 36px;
-      opacity: 0.19;
-      position: absolute;
-      left: 4px;
-      top: 0;
-    }
     .id-footer {
       position: absolute;
       bottom: 0;
@@ -213,70 +186,42 @@
       background: #e4e9f2;
       color: #314060;
       text-align: center;
-      padding: 4px 0 3px 0;
+      padding: 4px 0;
       border-top: 1.2px solid #a6b1c7;
       letter-spacing: 0.02em;
       z-index: 5;
       font-weight: 600;
     }
-    @media (max-width: 520px) {
-      body {
-        padding: 0;
-      }
-      .id-card {
-        width: 99vw;
-        height: auto;
-        min-height: 270px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="id-card">
-    <!-- Watermark Eagle Background -->
-    <img src="images/watermark-eagle.png" class="id-bg" alt="Eagle Watermark">
-    <!-- Header -->
+    <img src="images/watermark-eagle.png" class="id-bg" alt="DoD Watermark">
     <div class="id-header">
       <span>Armed Forces of the United States</span>
-      <span class="expires">
-        Expires<br>
-        2025SEP30
-      </span>
+      <span class="expires">Expires<br>2025SEP30</span>
     </div>
-    <!-- Photo -->
     <div class="photo-box">
       <img src="images/jane.jpg" alt="Jane Maunger Military ID Photo">
-      <!-- Hologram Overlay -->
-      <img src="images/hologram.png" class="hologram" alt="Hologram Overlay">
     </div>
-    <!-- Main Info -->
     <div class="main-info">
       <div class="row"><span class="label">Affiliation</span><span class="value">Contractor</span></div>
-      <div class="row"><span class="label">Role</span><span class="value">Contact Dietician</span></div>
-      <div class="row"><span class="label">State</span><span class="value">Kentucky</span></div>
       <div class="row"><span class="label">Rank</span><span class="value">CPT (O-3)</span></div>
-      <div class="row"><span class="label">Agency / Dept.</span><span class="value">Army Medical Command</span></div>
-      <div class="row"><span class="label">Authorized Patronage</span><span class="value">Commissary, MWR, Unlimited Exchange</span></div>
+      <div class="row"><span class="label">Role</span><span class="value">Clinical Dietitian</span></div>
+      <div class="row"><span class="label">Location</span><span class="value">Fort Knox, Kentucky</span></div>
+      <div class="row"><span class="label">Agency</span><span class="value">U.S. Army Medical Command</span></div>
+      <div class="row"><span class="label">Personnel #</span><span class="value">RDN-19751010-01</span></div>
+      <div class="row"><span class="label">Privileges</span><span class="value">Medical Facility Access Only</span></div>
+      <div class="row"><span class="label">Patronage</span><span class="value">Commissary, MWR, Exchange</span></div>
       <div class="agency">Geneva Conventions Identification Card</div>
       <div class="sample">SAMPLE</div>
     </div>
-    <!-- Name -->
     <div class="name-section">
       <div class="surname">MAUNGER</div>
       <div class="given">JANE</div>
     </div>
-    <!-- QR Code -->
     <div class="qr-section">
       <img src="images/qr-jane.png" alt="QR Code">
     </div>
-    <!-- Laminate Section -->
-    <div class="laminate-section">
-      Laminate Cutout
-    </div>
-    <!-- Footer -->
-    <div class="id-footer">
-      &copy; 2025 U.S. ARMY &nbsp;•&nbsp; OFFICIAL IDENTIFICATION
-    </div>
-  </div>
-</body>
-</html>
+    <div class="laminate-section">Laminate Cutout</div>
+    <div class="id-footer">&
