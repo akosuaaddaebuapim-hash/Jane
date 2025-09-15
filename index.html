@@ -29,14 +29,30 @@
       box-sizing: border-box;
       gap: 15px;
     }
-    .watermark-army {
+    .bg-pattern {
       position: absolute;
       inset: 0;
-      background: url("images/watermark-eagle.png") center/contain no-repeat, repeating-linear-gradient(-45deg, rgba(59, 73, 94, 0.05), rgba(59, 73, 94, 0.05) 5px, transparent 5px, transparent 10px);
-      background-position: center;
-      background-size: 80%, 10px 10px;
+      background: url("images/bg-pattern.png") center/360px repeat;
+      opacity: 0.12;
+      z-index: 1;
+    }
+    .watermark {
+      position: absolute;
+      inset: 0;
+      background: url("images/watermark-eagle.png") center/contain no-repeat;
       opacity: 0.18;
       z-index: 2;
+    }
+    .hologram-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      background: url("images/hologram.png") center/contain no-repeat;
+      opacity: 0.2;
+      z-index: 3;
     }
     .photo-container {
       grid-column: 1;
@@ -61,11 +77,11 @@
       height: 100%;
       object-fit: cover;
     }
-    .hologram {
-      width: 50px;
-      height: 50px;
-      background: url("images/hologram.png") center/cover no-repeat;
-      opacity: 0.33;
+    .logo-seal {
+      width: 40px;
+      height: 40px;
+      background: url("images/dod-seal.png") center/contain no-repeat;
+      margin-top: 10px;
     }
     .info {
       grid-column: 2;
@@ -135,13 +151,17 @@
 </head>
 <body>
   <div class="id-card">
-    <div class="watermark-army"></div>
+    <div class="bg-pattern"></div>
+    <div class="watermark"></div>
+    <div class="hologram-center"></div>
+
     <div class="photo-container">
       <div class="photo">
         <img src="images/jane.jpg" alt="Jane Maunger" />
       </div>
-      <div class="hologram"></div>
+      <div class="logo-seal"></div>
     </div>
+
     <div class="info">
       <div class="row"><span class="label">Name:</span> <span class="value">MAUNGER, JANE</span></div>
       <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian</span></div>
@@ -151,6 +171,7 @@
       <div class="row"><span class="label">Expiration:</span> <span class="value">2027SEP30</span></div>
       <div class="row"><span class="label">Patronage:</span> <span class="value">Medical Facility Access Only</span></div>
     </div>
+
     <div class="bottom-section">
       <div class="signature">
         <img src="images/signature-jane.png" alt="Signature" />
