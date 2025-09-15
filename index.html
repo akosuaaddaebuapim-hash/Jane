@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Military ID Card - Jane Maunger</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
+      margin: 0;
       background: #202b37;
-      font-family: Arial, 'Segoe UI', Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 0;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
     }
-    .id-card {
+    .card {
+      position: relative;
       width: 448px;
       height: 280px;
-      background: #fff;
-      border: 2.5px solid #3b495e;
       border-radius: 10px;
-      box-shadow: 0 8px 32px rgba(21,40,68,0.20);
-      position: relative;
       overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 32px rgba(21,40,68,0.20);
     }
-    .id-bg {
+    .bg-pattern {
       position: absolute;
       inset: 0;
       background: url("images/bg-pattern.png") center/360px repeat;
-      opacity: 0.12;
-      z-index: 0;
+      opacity: 0.14;
+      z-index: 1;
     }
-    .seal {
+    .watermark {
+      position: absolute;
+      inset: 0;
+      background: url("images/watermark-eagle.png") center/contain no-repeat;
+      opacity: 0.18;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .dod-seal {
       position: absolute;
       left: 50%;
       top: 116px;
@@ -39,48 +46,26 @@
       transform: translateX(-50%);
       background: url("images/dod-seal.png") center/contain no-repeat;
       opacity: 0.16;
-      z-index: 1;
+      z-index: 3;
     }
-    .id-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      font-size: 1.03em;
-      font-weight: 600;
-      color: #25344b;
-      padding: 13px 20px 7px 20px;
-      z-index: 2;
-      position: relative;
-    }
-    .id-header .expires {
-      background: #21314f;
-      color: #fff;
-      font-weight: 700;
-      border-radius: 4px;
-      font-size: 1.04em;
-      padding: 4px 12px;
-      letter-spacing: 1px;
-      min-width: 112px;
-      text-align: center;
-      border: 2px solid #a8b4c8;
-    }
-    .photo-box {
+    .photo {
       position: absolute;
-      top: 58px;
-      left: 22px;
-      width: 90px;
-      height: 122px;
-      background: #fff;
-      border: 1.2px solid #b6b6b6;
-      border-radius: 7px;
+      left: 24px;
+      top: 24px;
+      width: 160px;
+      height: 212px;
+      border-radius: 8px;
       overflow: hidden;
-      z-index: 2;
-      box-shadow: 0 2px 8px rgba(44,60,90,0.10);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+      z-index: 4;
     }
-    .photo-box img {
+    .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
     .hologram {
       position: absolute;
@@ -90,75 +75,9 @@
       height: 44px;
       background: url("images/hologram.png") center/cover no-repeat;
       opacity: 0.33;
-      z-index: 3;
+      z-index: 5;
     }
-    .main-info {
-      position: absolute;
-      left: 126px;
-      top: 58px;
-      right: 22px;
-      font-size: 0.96em;
-      color: #1a2630;
-      z-index: 2;
-      line-height: 1.4em;
-    }
-    .main-info .row {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 4px;
-    }
-    .main-info .label {
-      width: 120px;
-      font-weight: 600;
-      color: #314060;
-      flex-shrink: 0;
-    }
-    .main-info .value {
-      flex: 1;
-      font-weight: 500;
-      color: #1a2630;
-      word-break: break-word;
-    }
-    .main-info .agency {
-      margin-top: 6px;
-      font-weight: 600;
-      color: #184099;
-      font-size: 0.98em;
-    }
-    .main-info .sample {
-      color: #cf2525;
-      font-size: 1.6em;
-      font-weight: bold;
-      letter-spacing: 0.13em;
-      opacity: 0.42;
-      margin-top: 10px;
-      user-select: none;
-    }
-    .name-section {
-      position: absolute;
-      left: 22px;
-      bottom: 54px;
-      font-size: 1.13em;
-      font-weight: 700;
-      color: #1a2630;
-      letter-spacing: 0.01em;
-      z-index: 2;
-      line-height: 1.08em;
-      width: 210px;
-      text-align: left;
-      text-shadow: 0 3px 7px #fff9;
-    }
-    .name-section .surname {
-      font-size: 1em;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .name-section .given {
-      font-size: 0.98em;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .qr-section {
+    .qr {
       position: absolute;
       right: 18px;
       bottom: 18px;
@@ -167,13 +86,13 @@
       background: #fff;
       border-radius: 6px;
       border: 1.3px solid #ccd3e3;
-      z-index: 3;
       box-shadow: 0 2px 8px rgba(44,60,90,0.08);
+      z-index: 6;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    .qr-section img {
+    .qr img {
       width: 52px;
       height: 52px;
       object-fit: contain;
@@ -185,14 +104,27 @@
       bottom: 18px;
       width: 160px;
       height: 32px;
-      z-index: 3;
+      z-index: 6;
     }
     .barcode img {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
-    .laminate-section {
+    .signature {
+      position: absolute;
+      left: 22px;
+      bottom: 8px;
+      width: 160px;
+      height: 32px;
+      z-index: 7;
+    }
+    .signature img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .laminate {
       position: absolute;
       left: 186px;
       bottom: 22px;
@@ -201,7 +133,7 @@
       background: #f5f7fa;
       border: 1.2px solid #bcc7d8;
       border-radius: 8px;
-      z-index: 4;
+      z-index: 8;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -214,20 +146,7 @@
       background-position: center right;
       background-size: 28px;
     }
-    .signature {
-      position: absolute;
-      left: 22px;
-      bottom: 8px;
-      width: 160px;
-      height: 32px;
-      z-index: 3;
-    }
-    .signature img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .id-footer {
+    .footer {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -239,18 +158,31 @@
       padding: 4px 0;
       border-top: 1.2px solid #a6b1c7;
       letter-spacing: 0.02em;
-      z-index: 5;
+      z-index: 9;
       font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <div class="id-card">
-    <div class="id-bg"></div>
-    <div class="seal"></div>
-    <div class="id-header">
-      <span>Armed Forces of the United States</span>
-      <span class="expires">Expires<br>2025SEP30</span>
+  <div class="card">
+    <div class="bg-pattern"></div>
+    <div class="watermark"></div>
+    <div class="dod-seal"></div>
+    <div class="photo">
+      <img src="images/jane.jpg" alt="Jane Maunger" />
     </div>
-    <div class="photo-box">
-      <img src="images/jane.jpg" alt="Jane Ma
+    <div class="hologram"></div>
+    <div class="qr">
+      <img src="images/qr-jane.png" alt="QR Code" />
+    </div>
+    <div class="barcode">
+      <img src="images/barcode-jane.png" alt="Barcode" />
+    </div>
+    <div class="signature">
+      <img src="images/signature-jane.png" alt="Signature" />
+    </div>
+    <div class="laminate">Laminate</div>
+    <div class="footer">Geneva Conventions Identification Card • SAMPLE</div>
+  </div>
+</body>
+</html>
