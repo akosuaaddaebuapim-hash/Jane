@@ -22,6 +22,11 @@
       border-radius: 10px;
       box-shadow: 0 8px 32px rgba(21,40,68,0.20);
       overflow: hidden;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      grid-template-rows: 1fr 65px;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .bg-pattern {
       position: absolute;
@@ -48,36 +53,49 @@
       opacity: 0.16;
       z-index: 3;
     }
+    .photo-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      z-index: 4;
+    }
     .photo {
-      position: absolute;
-      left: 20px;
-      top: 20px;
-      width: 90px;
-      height: 122px;
+      width: 100px;
+      height: 132px;
       border-radius: 6px;
       overflow: hidden;
       background: #fff;
       border: 1px solid #ccc;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      z-index: 4;
+      margin-bottom: 10px;
     }
     .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+    .hologram {
+      width: 50px;
+      height: 50px;
+      background: url("images/hologram.png") center/cover no-repeat;
+      opacity: 0.33;
+      margin-bottom: 10px;
+    }
     .info {
-      position: absolute;
-      left: 120px;
-      top: 20px;
-      right: 20px;
-      font-size: 0.92em;
+      font-size: 0.9em;
       color: #1a2630;
       z-index: 5;
       line-height: 1.4em;
+      padding-left: 10px;
+      grid-column: 2;
+      grid-row: 1;
     }
     .info .row {
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .info .label {
       font-weight: 600;
@@ -87,23 +105,17 @@
       font-weight: 500;
       color: #1a2630;
     }
-    .hologram {
-      position: absolute;
-      left: 36px;
-      top: 130px;
-      width: 44px;
-      height: 44px;
-      background: url("images/hologram.png") center/cover no-repeat;
-      opacity: 0.33;
-      z-index: 6;
+    .bottom-section {
+      grid-column: 1 / span 2;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 7;
     }
     .signature {
-      position: absolute;
-      left: 20px;
-      bottom: 18px;
-      width: 90px;
-      height: 32px;
-      z-index: 7;
+      width: 100px;
+      height: 40px;
     }
     .signature img {
       width: 100%;
@@ -111,12 +123,9 @@
       object-fit: contain;
     }
     .barcode {
-      position: absolute;
-      left: 120px;
-      bottom: 18px;
       width: 160px;
-      height: 32px;
-      z-index: 7;
+      height: 40px;
+      margin-left: 10px;
     }
     .barcode img {
       width: 100%;
@@ -124,47 +133,22 @@
       object-fit: contain;
     }
     .qr {
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
       width: 62px;
       height: 62px;
       background: #fff;
       border-radius: 6px;
       border: 1.3px solid #ccd3e3;
       box-shadow: 0 2px 8px rgba(44,60,90,0.08);
-      z-index: 8;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-left: auto;
     }
     .qr img {
       width: 52px;
       height: 52px;
       object-fit: contain;
       border-radius: 3px;
-    }
-    .laminate {
-      position: absolute;
-      left: 186px;
-      bottom: 64px;
-      width: 92px;
-      height: 36px;
-      background: #f5f7fa;
-      border: 1.2px solid #bcc7d8;
-      border-radius: 8px;
-      z-index: 9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1em;
-      color: #4a5562;
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(44,60,90,0.09);
-      background-image: url("images/laminate-icon.png");
-      background-repeat: no-repeat;
-      background-position: center right;
-      background-size: 28px;
     }
   </style>
 </head>
@@ -173,10 +157,14 @@
     <div class="bg-pattern"></div>
     <div class="watermark"></div>
     <div class="dot-card"></div>
-    <div class="photo">
-      <img src="images/jane.png" alt="Jane Maunger" />
+
+    <div class="photo-container">
+      <div class="photo">
+        <img src="images/jane.png" alt="Jane Maunger" />
+      </div>
+      <div class="hologram"></div>
     </div>
-    <div class="hologram"></div>
+
     <div class="info">
       <div class="row"><span class="label">Name:</span> <span class="value">MAUNGER, JANE</span></div>
       <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian</span></div>
@@ -186,16 +174,18 @@
       <div class="row"><span class="label">Expiration:</span> <span class="value">2027SEP30</span></div>
       <div class="row"><span class="label">Patronage:</span> <span class="value">Medical Facility Access Only</span></div>
     </div>
-    <div class="signature">
-      <img src="images/signature-jane.png" alt="Signature" />
+
+    <div class="bottom-section">
+      <div class="signature">
+        <img src="images/signature-jane.png" alt="Signature" />
+      </div>
+      <div class="barcode">
+        <img src="images/barcode-jane.png" alt="Barcode" />
+      </div>
+      <div class="qr">
+        <img src="images/qr-jane.png" alt="QR Code" />
+      </div>
     </div>
-    <div class="barcode">
-      <img src="images/barcode-jane.png" alt="Barcode" />
-    </div>
-    <div class="qr">
-      <img src="images/qr-jane.png" alt="QR Code" />
-    </div>
-    <div class="laminate">Laminate</div>
   </div>
 </body>
 </html>
