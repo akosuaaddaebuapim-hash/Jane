@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Uniformed Services ID Card – Jane Maunger</title>
+  <title>Geneva Conventions ID – Jane Maunger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
@@ -18,198 +18,159 @@
       width: 448px;
       height: 280px;
       background: #fff;
+      border: 2px solid #3b495e;
       border-radius: 10px;
       box-shadow: 0 8px 32px rgba(21, 40, 68, 0.20);
       overflow: hidden;
-      padding: 15px 20px;
-      box-sizing: border-box;
       display: grid;
-      grid-template-columns: 140px 1fr 100px;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 5px 15px;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: #314060;
+      grid-template-columns: 140px 1fr;
+      grid-template-rows: auto 1fr auto;
+      padding: 20px;
+      box-sizing: border-box;
+      gap: 15px;
+    }
+    .bg-pattern {
+      position: absolute;
+      inset: 0;
+      background: url("images/bg-pattern.png") center/360px repeat;
+      opacity: 0.12;
+      z-index: 1;
     }
     .watermark {
       position: absolute;
       inset: 0;
       background: url("images/watermark-eagle.png") center/contain no-repeat;
-      opacity: 0.1;
-      z-index: 1;
-    }
-    .card-header {
-      grid-column: 1 / span 3;
-      text-align: center;
-      font-size: 0.8em;
-      letter-spacing: 0.5px;
-      margin-bottom: 5px;
+      opacity: 0.18;
       z-index: 2;
     }
     .photo-container {
       grid-column: 1;
-      grid-row: 2 / span 3;
-      position: relative;
-      z-index: 2;
+      grid-row: 1 / span 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 4;
     }
     .photo {
       width: 100%;
-      height: 160px;
-      border: 1px solid #ccc;
+      height: 150px;
       border-radius: 6px;
       overflow: hidden;
-      margin-bottom: 5px;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
     }
     .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    .logo {
-      width: 30px;
-      height: 30px;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background: url("images/d-o-d.png") center/contain no-repeat;
-    }
-    .expires {
-      grid-column: 3;
-      grid-row: 2;
-      text-align: right;
-      font-size: 0.8em;
-      z-index: 2;
+    .hologram {
+      width: 50px;
+      height: 50px;
+      background: url("images/hologram.png") center/cover no-repeat;
+      opacity: 0.33;
     }
     .info {
       grid-column: 2;
-      grid-row: 2 / span 2;
-      font-size: 0.8em;
-      z-index: 2;
-    }
-    .info-row {
-      margin-bottom: 10px;
-    }
-    .info-label {
+      grid-row: 1 / span 2;
       font-size: 0.9em;
-      font-weight: 500;
-      color: #7b8593;
+      color: #1a2630;
+      z-index: 5;
+      line-height: 1.4em;
     }
-    .info-value {
-      display: block;
-      margin-top: 2px;
-      font-size: 1.1em;
+    .info .row {
+      margin-bottom: 8px;
+    }
+    .info .label {
       font-weight: 600;
-      letter-spacing: 0.5px;
+      color: #314060;
+    }
+    .info .value {
+      font-weight: 500;
       color: #1a2630;
     }
-    .name-section {
-      grid-column: 1;
-      grid-row: 4;
-      font-size: 0.9em;
-      text-align: center;
-      z-index: 2;
-      line-height: 1.3em;
-    }
-    .name-section .label {
-      display: block;
-      font-size: 0.8em;
-      color: #7b8593;
-      margin-bottom: 2px;
-    }
-    .name-section .value {
-      font-size: 1.1em;
-      font-weight: bold;
-      color: #1a2630;
-    }
-    .qr-container {
-      grid-column: 3;
-      grid-row: 3 / span 2;
+    .bottom-section {
+      grid-column: 1 / span 2;
+      grid-row: 3;
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      z-index: 2;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 7;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+    }
+    .signature {
+      width: 100px;
+      height: 40px;
+    }
+    .signature img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .barcode {
+      width: 160px;
+      height: 40px;
+    }
+    .barcode img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     .qr {
-      width: 80px;
-      height: 80px;
+      width: 62px;
+      height: 62px;
       background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
+      border: 1.3px solid #ccd3e3;
+      box-shadow: 0 2px 8px rgba(44, 60, 90, 0.08);
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 5px;
     }
     .qr img {
-      width: 70px;
-      height: 70px;
+      width: 52px;
+      height: 52px;
       object-fit: contain;
-    }
-    .cutout {
-      width: 80px;
-      height: 30px;
-      background: url("images/laminate-icon.png") center/contain no-repeat;
-      opacity: 0.8;
-      transform: scaleX(-1);
-    }
-    .sample-text {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) rotate(-20deg);
-      font-size: 4em;
-      font-weight: bold;
-      color: rgba(255, 0, 0, 0.7);
-      letter-spacing: 4px;
-      z-index: 10;
-      pointer-events: none;
+      border-radius: 3px;
     }
   </style>
 </head>
 <body>
   <div class="id-card">
+    <div class="bg-pattern"></div>
     <div class="watermark"></div>
-    <div class="card-header">Armed Forces of the United States</div>
 
     <div class="photo-container">
       <div class="photo">
         <img src="images/jane.jpg" alt="Jane Maunger" />
       </div>
-      <div class="name-section">
-        <span class="label">DOE,</span>
-        <span class="value">JOHN GARY</span>
-      </div>
-      <div class="logo"></div>
-    </div>
-
-    <div class="expires">
-      <span class="info-label">Expires</span>
-      <span class="info-value">2027SEP30</span>
+      <div class="hologram"></div>
     </div>
 
     <div class="info">
-      <div class="info-row">
-        <span class="info-label">Affiliation</span>
-        <span class="info-value">Civilian</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Pay Grade</span>
-        <span class="info-value">GS-09</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Agency / Department</span>
-        <span class="info-value">U.S. Army Medical Command</span>
-      </div>
+      <div class="row"><span class="label">Name:</span> <span class="value">MAUNGER, JANE</span></div>
+      <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian</span></div>
+      <div class="row"><span class="label">Title:</span> <span class="value">Contracted Clinical Dietitian</span></div>
+      <div class="row"><span class="label">Agency:</span> <span class="value">U.S. Army Medical Command</span></div>
+      <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
+      <div class="row"><span class="label">Expiration:</span> <span class="value">2027SEP30</span></div>
+      <div class="row"><span class="label">Patronage:</span> <span class="value">Medical Facility Access Only</span></div>
     </div>
-    
-    <div class="qr-container">
+
+    <div class="bottom-section">
+      <div class="signature">
+        <img src="images/signature-jane.png" alt="Signature" />
+      </div>
+      <div class="barcode">
+        <img src="images/barcode-jane.png" alt="Barcode" />
+      </div>
       <div class="qr">
         <img src="images/qr-jane.png" alt="QR Code" />
       </div>
-      <div class="cutout"></div>
     </div>
-
-    <div class="sample-text">SAMPLE</div>
   </div>
 </body>
 </html>
