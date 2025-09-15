@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Military ID Card - Jane Maunger</title>
+  <title>Jane Maunger ID Card</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
@@ -37,14 +37,14 @@
       z-index: 2;
       pointer-events: none;
     }
-    .dod-seal {
+    .dot-card {
       position: absolute;
       left: 50%;
       top: 116px;
       width: 112px;
       height: 112px;
       transform: translateX(-50%);
-      background: url("images/dod-seal.png") center/contain no-repeat;
+      background: url("images/dot-card.png") center/contain no-repeat;
       opacity: 0.16;
       z-index: 3;
     }
@@ -98,32 +98,6 @@
       object-fit: contain;
       border-radius: 3px;
     }
-    .barcode {
-      position: absolute;
-      left: 22px;
-      bottom: 18px;
-      width: 160px;
-      height: 32px;
-      z-index: 6;
-    }
-    .barcode img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .signature {
-      position: absolute;
-      left: 22px;
-      bottom: 8px;
-      width: 160px;
-      height: 32px;
-      z-index: 7;
-    }
-    .signature img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
     .laminate {
       position: absolute;
       left: 186px;
@@ -133,7 +107,7 @@
       background: #f5f7fa;
       border: 1.2px solid #bcc7d8;
       border-radius: 8px;
-      z-index: 8;
+      z-index: 7;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -158,7 +132,7 @@
       padding: 4px 0;
       border-top: 1.2px solid #a6b1c7;
       letter-spacing: 0.02em;
-      z-index: 9;
+      z-index: 8;
       font-weight: 600;
     }
   </style>
@@ -167,19 +141,13 @@
   <div class="card">
     <div class="bg-pattern"></div>
     <div class="watermark"></div>
-    <div class="dod-seal"></div>
+    <div class="dot-card"></div>
     <div class="photo">
-      <img src="images/jane.jpg" alt="Jane Maunger" />
+      <img src="images/jane.png" alt="Jane Maunger" />
     </div>
     <div class="hologram"></div>
     <div class="qr">
       <img src="images/qr-jane.png" alt="QR Code" />
-    </div>
-    <div class="barcode">
-      <img src="images/barcode-jane.png" alt="Barcode" />
-    </div>
-    <div class="signature">
-      <img src="images/signature-jane.png" alt="Signature" />
     </div>
     <div class="laminate">Laminate</div>
     <div class="footer">Geneva Conventions Identification Card • SAMPLE</div>
