@@ -2,155 +2,248 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Geneva Conventions ID – Jane Maunger</title>
+  <title>Sample Access Card — Not For Official Use</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      margin: 0;
-      background: #202b37;
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
+    :root{
+      --card-w: 448px;
+      --card-h: 280px;
+      --ink: #102030;
+      --ink-2: #2a3a52;
+      --accent: #3b6fd8;
+      --paper: #ffffff;
     }
-    .id-card {
-      position: relative;
-      width: 448px;
-      height: 280px;
-      background: #fff;
-      border: 2px solid #3b495e;
-      border-radius: 10px;
-      box-shadow: 0 8px 32px rgba(21, 40, 68, 0.20);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      grid-template-rows: auto 1fr auto;
-      padding: 20px;
-      box-sizing: border-box;
-      gap: 15px;
+    body{
+      margin:0; min-height:100vh; display:grid; place-items:center;
+      background:#0f1720; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#e6edf6;
+      padding:24px;
     }
-    .bg-pattern {
-      position: absolute;
-      inset: 0;
-      background: url("images/bg-pattern.png") center/360px repeat;
-      opacity: 0.25; /* Increased opacity for more pop */
-      z-index: 1;
+    .card-heading {
+      font-size: 1.4em;
+      font-weight: 800;
+      color: #e0e8f0;
+      text-align: center;
+      margin-bottom: 18px;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.45);
+      letter-spacing: .02em;
     }
-    .watermark {
-      position: absolute;
-      inset: 0;
-      background: url("images/watermark-eagle.png") center/contain no-repeat;
-      opacity: 0.35; /* Increased opacity for more pop */
-      z-index: 2;
+    .subhead {
+      font-size: .95em;
+      text-align:center;
+      color:#a8b3c4;
+      margin-top:-6px;
+      margin-bottom:18px;
     }
-    .hologram-center {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
-      background: url("images/hologram.png") center/contain no-repeat;
-      opacity: 0.5; /* Increased opacity for more pop */
-      z-index: 3;
+    .id-card{
+      position:relative; width:var(--card-w); height:var(--card-h);
+      background: var(--paper);
+      border-radius:12px;
+      border:1px solid rgba(20,40,60,0.15);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.6);
+      overflow:hidden;
     }
-    .photo-container {
-      grid-column: 1;
-      grid-row: 1 / span 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 4;
+
+    /* Background depth */
+    .tint{
+      position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(120% 90% at 20% 15%, #eaf2ff 0%, transparent 55%),
+        linear-gradient(180deg, #f7fbff 0%, #ffffff 60%, #f4f8ff 100%);
+      opacity:.9;
     }
-    .photo {
-      width: 100%;
-      height: 150px;
-      border-radius: 6px;
-      overflow: hidden;
-      background: #fff;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 10px;
+    .bg-pattern{
+      position:absolute; inset:0; z-index:1; opacity:.18;
+      background:
+        repeating-linear-gradient( 0deg, rgba(60,90,150,0.10) 0 1px, transparent 1px 22px),
+        repeating-linear-gradient(90deg, rgba(60,90,150,0.08) 0 1px, transparent 1px 22px);
+      mix-blend-mode:multiply;
+      filter:contrast(1.05) saturate(1.02);
     }
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+
+    /* SAMPLE watermark to keep it safe */
+    .watermark{
+      position:absolute; inset:-20%;
+      display:flex; align-items:center; justify-content:center;
+      z-index:2; pointer-events:none;
+      transform:rotate(-18deg);
     }
-    .logo-seal {
-      width: 40px;
-      height: 40px;
-      background: url("images/dod-seal.png") center/contain no-repeat;
-      margin-top: 10px;
+    .watermark span{
+      font-size:72px; font-weight:900; letter-spacing:.08em;
+      color:rgba(200,0,0,0.14);
+      text-shadow:0 1px 0 rgba(255,255,255,0.5);
+      user-select:none;
     }
-    .info {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-      font-size: 0.9em;
-      color: #1a2630;
-      z-index: 5;
-      line-height: 1.4em;
+
+    /* Neutral emblem (generic, not an official logo) */
+    .emblem{
+      position:absolute; left:50%; top:56%;
+      width:130px; height:130px; transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(59,111,216,0.10), rgba(59,111,216,0.0) 60%),
+        conic-gradient(from 0deg, rgba(16,32,64,0.08), rgba(16,32,64,0.02), rgba(16,32,64,0.08));
+      opacity:.22; z-index:3; mix-blend-mode:multiply; filter:contrast(1.05);
     }
-    .info .row {
-      margin-bottom: 8px;
+
+    /* Micro-noise for print realism */
+    .noise{
+      position:absolute; inset:0; z-index:4; pointer-events:none; mix-blend-mode:multiply;
+      background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter>\
+<rect width='140' height='140' filter='url(%23n)' opacity='0.035'/></svg>");
+      background-size: 280px 280px;
     }
-    .info .label {
-      font-weight: 600;
-      color: #314060;
+
+    /* Optional generic top-right badge placeholder (non-official) */
+    .generic-badge{
+      position:absolute; right:20px; top:20px; width:64px; height:64px; z-index:5; opacity:.92;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 40% 30%, #fefefe, #e9eef7 60%, #cfd9ea 85%, #b7c3da),
+        conic-gradient(from 0deg, rgba(16,32,64,0.08), rgba(16,32,64,0.02), rgba(16,32,64,0.08));
+      border:1px solid rgba(20,40,60,0.18);
+      box-shadow: 0 2px 8px rgba(16,32,48,0.12);
     }
-    .info .value {
-      font-weight: 500;
-      color: #1a2630;
+
+    /* Photo */
+    .photo{
+      position:absolute; left:20px; top:20px; width:96px; height:128px;
+      border-radius:8px; overflow:hidden; background:#fff;
+      border:1px solid rgba(20,40,60,0.18);
+      box-shadow: 0 4px 14px rgba(16,32,48,0.12);
+      z-index:8;
+      display:flex; align-items:center; justify-content:center; color:#6b7a90; font-weight:600; font-size:12px;
     }
-    .bottom-section {
-      grid-column: 1 / span 2;
-      grid-row: 3;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 7;
-      padding-top: 10px;
-      border-top: 1px solid #ccc;
+    .photo img{ width:100%; height:100%; object-fit:cover; }
+
+    /* Smart chip (inline SVG) */
+    .chip{
+      position:absolute; left:24px; top:164px; width:50px; height:36px; z-index:8;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.28));
+      background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='100' height='72' viewBox='0 0 100 72'>\
+<defs>\
+<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
+  <stop offset='0%' stop-color='%23ffef9f'/>\
+  <stop offset='60%' stop-color='%23e2bb39'/>\
+  <stop offset='100%' stop-color='%23b98a2e'/>\
+</linearGradient>\
+</defs>\
+<rect x='1.5' y='1.5' width='97' height='69' rx='8' ry='8' fill='url(%23g)' stroke='%23997b22' stroke-width='3'/>\
+<g stroke='%235c522b' stroke-width='3' fill='none' stroke-linecap='round'>\
+  <path d='M8 18 H92'/>\
+  <path d='M8 36 H92'/>\
+  <path d='M8 54 H92'/>\
+  <path d='M50 8 V64'/>\
+  <rect x='36' y='28' width='28' height='16' rx='3'/>\
+</g>\
+</svg>");
+      background-size: cover; background-repeat:no-repeat; background-position:center;
+      border-radius:6px;
     }
-    .signature {
-      width: 100px;
-      height: 40px;
+
+    /* Info block */
+    .info{
+      position:absolute; left:132px; top:20px; right:20px; z-index:9;
+      color:var(--ink); line-height:1.35em;
+      text-shadow:0 1px 0 rgba(255,255,255,0.65);
     }
-    .signature img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .info .row{ display:flex; gap:.5em; margin:3px 0; align-items:baseline; }
+    .label{ font-weight:800; color:var(--ink-2); min-width:120px; letter-spacing:.02em; }
+    .value{ font-weight:700; color:var(--ink); letter-spacing:.01em; }
+
+    /* Bottom elements */
+    .sign{
+      position:absolute; left:20px; bottom:16px; width:96px; height:30px; z-index:9;
+      border-radius:6px; background:#fff; border:1px solid rgba(20,40,60,0.18);
+      box-shadow: 0 2px 8px rgba(16,32,48,0.10);
+      display:flex; align-items:center; justify-content:center; color:#759;
+      font-style:italic; font-size:12px;
     }
+    .barcode{
+      position:absolute; left:132px; bottom:16px; width:170px; height:34px; z-index:9;
+      background:
+        repeating-linear-gradient(90deg, #111 0 2px, transparent 2px 4px),
+        linear-gradient(#fff,#fff);
+      border:1px solid rgba(20,40,60,0.18); border-radius:4px;
+      box-shadow: 0 2px 8px rgba(16,32,48,0.10);
+    }
+    .qr{
+      position:absolute; right:18px; bottom:16px; width:64px; height:64px; z-index:9;
+      background:
+        conic-gradient(#000 0 25%, #fff 0 50%, #000 0 75%, #fff 0),
+        linear-gradient(#fff,#fff);
+      background-size: 16px 16px, cover;
+      border:1px solid rgba(20,40,60,0.18); border-radius:6px;
+      box-shadow: 0 2px 8px rgba(16,32,48,0.10);
+    }
+
+    /* High-gloss overlay + plastic feel */
+    .gloss{
+      position:absolute; inset:0; z-index:10; pointer-events:none;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 60%, rgba(255,255,255,0.12) 100%),
+        radial-gradient(60% 30% at 10% 0%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(40% 30% at 90% 0%, rgba(255,255,255,0.22), transparent 60%);
+      mix-blend-mode: screen;
+    }
+    .sheen{
+      position:absolute; inset:0; z-index:11; pointer-events:none;
+      background:
+        radial-gradient(140% 100% at 50% -10%, rgba(255,255,255,0.45), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,0.06), transparent 30%, transparent 70%, rgba(0,0,0,0.05));
+      mix-blend-mode: overlay;
+    }
+    .reflect{
+      position:absolute; inset:0; z-index:12; pointer-events:none;
+      background:
+        linear-gradient( to right, rgba(255,255,255,0.11) 0 1px, transparent 1px calc(100% - 1px), rgba(255,255,255,0.11) calc(100% - 1px) 100%),
+        linear-gradient( to bottom, rgba(255,255,255,0.10) 0 1px, transparent 1px calc(100% - 1px), rgba(255,255,255,0.10) calc(100% - 1px) 100%);
+    }
+
+    /* Accessibility and crispness */
+    @media (min-resolution: 2dppx){ .bg-pattern{ opacity:.2; } }
   </style>
 </head>
 <body>
-  <div class="id-card">
-    <div class="bg-pattern"></div>
-    <div class="watermark"></div>
-    <div class="hologram-center"></div>
+  <h1 class="card-heading">Department of Defense — Common Access Card</h1>
+  <div class="subhead">Sample design for portfolio use. Not an official credential.</div>
 
-    <div class="photo-container">
-      <div class="photo">
-        <img src="images/jane.jpg" alt="Jane Maunger" />
-      </div>
-      <div class="logo-seal"></div>
+  <div class="id-card" aria-label="Sample access card. Not for official use.">
+    <div class="tint"></div>
+    <div class="bg-pattern"></div>
+    <div class="watermark" aria-hidden="true"><span>SAMPLE — NOT FOR OFFICIAL USE</span></div>
+    <div class="emblem" aria-hidden="true"></div>
+    <div class="noise"></div>
+    <div class="generic-badge" aria-hidden="true" title="Generic emblem (non-official)"></div>
+
+    <div class="photo" aria-label="Photo">
+      <!-- Replace with your own neutral portrait if desired -->
+      PHOTO
+      <!-- <img src="images/jane.png" alt="Jane Maunger" /> -->
     </div>
+
+    <div class="chip" title="Smart chip (sample)"></div>
 
     <div class="info">
-      <div class="row"><span class="label">Name:</span> <span class="value">MAUNGER, JANE</span></div>
-      <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian</span></div>
-      <div class="row"><span class="label">Title:</span> <span class="value">Contracted Clinical Dietitian</span></div>
-      <div class="row"><span class="label">Agency:</span> <span class="value">U.S. Army Medical Command</span></div>
-      <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
-      <div class="row"><span class="label">Expiration:</span> <span class="value">2027SEP30</span></div>
-      <div class="row"><span class="label">Patronage:</span> <span class="value">Medical Facility Access Only</span></div>
+      <div class="row"><span class="label">Name:</span><span class="value">JANE MAUNGER</span></div>
+      <div class="row"><span class="label">Affiliation:</span><span class="value">Civilian Contractor</span></div>
+      <div class="row"><span class="label">Title:</span><span class="value">Clinical Dietitian</span></div>
+      <div class="row"><span class="label">Organization:</span><span class="value">Health Services Department</span></div>
+      <div class="row"><span class="label">Duty station:</span><span class="value">Fort Knox, Kentucky</span></div>
+      <div class="row"><span class="label">Expiration:</span><span class="value">30 SEP 2027</span></div>
+      <div class="row"><span class="label">Privileges:</span><span class="value">Facility Access (Sample)</span></div>
     </div>
 
-    <div class="bottom-section">
-      <div class="signature">
-        <img src="images/signature-jane.png" alt="Signature" />
-      </div>
-      </div>
+    <div class="sign" aria-label="Sample signature">Sample Signature</div>
+    <div class="barcode" aria-label="Sample barcode (decorative)"></div>
+    <div class="qr" aria-label="Sample QR (decorative)"></div>
+
+    <div class="gloss"></div>
+    <div class="sheen"></div>
+    <div class="reflect"></div>
   </div>
 </body>
 </html>
