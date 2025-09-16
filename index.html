@@ -16,42 +16,30 @@
 
     body {
       margin: 0;
-      background: #0d1a29; /* Darker background to make the card pop */
+      background: linear-gradient(145deg, #0f1720, #1c2a3a);
       display: grid;
       place-items: center;
       min-height: 100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
       padding: 24px;
-      perspective: 1000px; /* Adds 3D perspective to the scene */
     }
 
-    .id-card-container {
-      position: relative;
-      width: var(--cr80-width);
-      height: var(--cr80-height);
-      transform: rotateX(8deg) rotateY(-10deg) translateZ(50px); /* Tilts the card for a photo-like angle */
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); /* Stronger shadow to ground the object */
-      transition: transform 0.5s ease-out;
-    }
-    
     .id-card {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 540px; /* Maintains the original pixel dimensions for visual consistency */
+      height: 340px;
       background: var(--card-bg);
-      border-radius: 4mm;
+      border-radius: 12px;
       overflow: hidden;
       box-shadow:
-        /* Complex shadow stack for plastic depth */
-        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
-        0 1px 2px rgba(0, 0, 0, 0.1) inset,
-        0 -1px 2px rgba(0, 0, 0, 0.1) inset,
-        0 2px 4px rgba(0, 0, 0, 0.2);
+        /* Complex shadow stack for plastic depth and realism */
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
     }
-    
-    /* ... (rest of the CSS from the previous example) ... */
-    
-    /* The following elements are crucial for the plastic feel */
+
+    /* All inner elements are correctly positioned and sized */
     .tint {
       position: absolute;
       inset: 0;
@@ -61,15 +49,23 @@
       z-index: 0;
     }
 
-    .gloss {
+    .bg-pattern, .watermark {
       position: absolute;
       inset: 0;
-      z-index: 20;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 70%),
-        linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.3) 80%);
-      mix-blend-mode: screen;
+      opacity: 0.3;
+      filter: contrast(1.2) saturate(1.2);
+      z-index: 1;
+    }
+
+    .bg-pattern {
+      background: url("images/bg-pattern.png") center/280px repeat;
+    }
+
+    .watermark {
+      background: url("images/watermark-example.png") center/72% no-repeat;
+      opacity: 0.28;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
     }
 
     .hologram {
@@ -88,104 +84,186 @@
       0% { background-position: 0% 0%; }
       100% { background-position: 100% 100%; }
     }
-    
-    /* Styles for the inner content of the card */
-    .photo, .chip, .info, .signature, .barcode, .qr {
-        position: absolute;
-        z-index: 10;
+
+    .dod-seal, .army-logo, .laminate-icon {
+      position: absolute;
+      z-index: 4;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.9;
+    }
+
+    .dod-seal {
+      left: 50%;
+      top: 120px;
+      width: 120px;
+      height: 120px;
+      transform: translateX(-50%);
+      background-image: url("images/dod-seal.png");
+      opacity: 0.22;
+      filter: contrast(1.08);
+    }
+
+    .army-logo {
+      right: 20px;
+      top: 20px;
+      width: 64px;
+      height: 64px;
+      background-image: url("images/army-logo-jane.png");
+    }
+
+    .laminate-icon {
+      right: 20px;
+      top: 20px;
+      width: 64px;
+      height: 64px;
+      background-image: url("images/laminate-icon.png");
+      opacity: 0.95;
+      mix-blend-mode: screen;
     }
 
     .photo {
-        left: 20px;
-        top: 20px;
-        width: 96px;
-        height: 128px;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid rgba(20,40,60,0.18);
-        box-shadow: 0 4px 12px rgba(16,32,48,0.3); /* Adds depth to the photo itself */
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 96px;
+      height: 128px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid rgba(20, 40, 60, 0.18);
+      box-shadow: 0 6px 18px rgba(16, 32, 48, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+      z-index: 10;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .chip {
+      position: absolute;
+      left: 24px;
+      top: 164px;
+      width: 50px;
+      height: 36px;
+      background: url("images/smart-chip.png") center/contain no-repeat;
+      z-index: 10;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
     }
 
     .info {
-        left: 132px;
-        top: 20px;
-        right: 20px;
-        color: var(--text-color);
+      position: absolute;
+      left: 132px;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      color: var(--text-color);
+      line-height: 1.4em;
     }
-    
+
+    .info .row {
+      margin-bottom: 6px;
+    }
+
     .label {
-        color: var(--label-color);
-        font-weight: 600;
+      font-weight: 700;
+      color: var(--label-color);
+      display: inline-block;
+      min-width: 120px;
     }
 
     .value {
-        font-weight: 700;
-        color: var(--text-color);
+      font-weight: 600;
+      color: var(--text-color);
     }
-    
+
+    .signature, .barcode, .qr {
+      position: absolute;
+      bottom: 16px;
+      z-index: 10;
+    }
+
     .signature {
-        left: 20px;
-        bottom: 16px;
-        width: 96px;
-        height: 30px;
+      left: 20px;
+      width: 96px;
+      height: 30px;
     }
 
     .barcode {
-        left: 132px;
-        bottom: 16px;
-        width: 170px;
-        height: 34px;
+      left: 132px;
+      width: 170px;
+      height: 34px;
     }
 
     .qr {
-        right: 18px;
-        bottom: 16px;
-        width: 64px;
-        height: 64px;
+      right: 18px;
+      width: 64px;
+      height: 64px;
+    }
+
+    .signature img, .barcode img, .qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr img {
+      border-radius: 4px;
+    }
+
+    .gloss {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4), transparent 70%),
+        linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.2) 80%);
+      mix-blend-mode: screen;
     }
   </style>
 </head>
 <body>
-  <div class="id-card-container">
-    <div class="id-card">
-      <div class="tint"></div>
-      <div class="bg-pattern"></div>
-      <div class="watermark"></div>
-      <div class="dod-seal"></div>
-      <div class="army-logo"></div>
-      <div class="hologram"></div>
-      <div class="laminate-icon"></div>
+  <div class="id-card">
+    <div class="tint"></div>
+    <div class="bg-pattern"></div>
+    <div class="watermark"></div>
+    <div class="dod-seal"></div>
+    <div class="army-logo"></div>
+    <div class="hologram"></div>
+    <div class="laminate-icon"></div>
   
-      <div class="photo">
-        <img src="images/jane.jpg" alt="Jane Maunger" />
-      </div>
-  
-      <div class="chip"></div>
-  
-      <div class="info">
-        <div class="row"><span class="label">Name:</span> <span class="value">JANE MAUNGER</span></div>
-        <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian Contractor</span></div>
-        <div class="row"><span class="label">Title:</span> <span class="value">Clinical Dietitian</span></div>
-        <div class="row"><span class="label">Department:</span> <span class="value">U.S. Army Medical Command</span></div>
-        <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
-        <div class="row"><span class="label">Expiration:</span> <span class="value">30 SEP 2027</span></div>
-        <div class="row"><span class="label">Privileges:</span> <span class="value">Facility Access Only</span></div>
-      </div>
-  
-      <div class="signature">
-        <img src="images/jane-signature.png" alt="Jane Maunger's signature" />
-      </div>
-  
-      <div class="barcode">
-        <img src="images/barcode.png" alt="ID Card Barcode" />
-      </div>
-  
-      <div class="qr">
-        <img src="images/qr-code.png" alt="ID Card QR code" />
-      </div>
-  
-      <div class="gloss"></div>
+    <div class="photo">
+      <img src="images/jane.jpg" alt="Jane Maunger" />
     </div>
+  
+    <div class="chip"></div>
+  
+    <div class="info">
+      <div class="row"><span class="label">Name:</span> <span class="value">JANE MAUNGER</span></div>
+      <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian Contractor</span></div>
+      <div class="row"><span class="label">Title:</span> <span class="value">Clinical Dietitian</span></div>
+      <div class="row"><span class="label">Department:</span> <span class="value">U.S. Army Medical Command</span></div>
+      <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
+      <div class="row"><span class="label">Expiration:</span> <span class="value">30 SEP 2027</span></div>
+      <div class="row"><span class="label">Privileges:</span> <span class="value">Facility Access Only</span></div>
+    </div>
+  
+    <div class="signature">
+      <img src="images/jane-signature.png" alt="Jane Maunger's signature" />
+    </div>
+  
+    <div class="barcode">
+      <img src="images/barcode.png" alt="ID Card Barcode" />
+    </div>
+  
+    <div class="qr">
+      <img src="images/qr-code.png" alt="ID Card QR code" />
+    </div>
+  
+    <div class="gloss"></div>
   </div>
 </body>
 </html>
