@@ -5,6 +5,18 @@
   <title>Jane Maunger – Common Access Card</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.02); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.2; }
+    }
+
+    @keyframes hologram-pulse {
+      0% { opacity: 0.35; transform: scale(1) translateZ(5px); }
+      50% { opacity: 0.45; transform: scale(1.02) translateZ(5px); }
+      100% { opacity: 0.35; transform: scale(1) translateZ(5px); }
+    }
+
     body {
       margin: 0;
       background: #0f1720;
@@ -14,8 +26,7 @@
       font-family: Arial, sans-serif;
       color: #102030;
       padding: 24px;
-      /* Enable 3D perspective on the body to make 3D transforms possible */
-      perspective: 1000px;
+      perspective: 1200px; /* Increased perspective for stronger 3D effect */
     }
     h1 {
       font-size: 1.4em;
@@ -31,17 +42,23 @@
       height: 280px;
       background: #ffffff;
       border-radius: 12px;
-      /* Multiple shadows for a more realistic, diffused look */
-      box-shadow: 0 16px 48px rgba(0,0,0,0.35), 
-                  0 0 0 1px rgba(255,255,255,0.6),
-                  0 8px 16px rgba(0,0,0,0.1);
+      /* Enhanced shadows for depth and a slight edge highlight for plastic feel */
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 
+                  0 0 0 1px rgba(255,255,255,0.8) inset, /* Inner top edge highlight */
+                  0 -1px 0 1px rgba(0,0,0,0.1) inset, /* Inner bottom edge shadow */
+                  0 0 10px rgba(255,255,255,0.05) inset; /* Subtle inner glow */
       overflow: hidden;
       transform-style: preserve-3d;
-      transition: transform 0.5s ease;
+      transition: transform 0.6s ease-out; /* Slower, smoother transition */
+      /* Add an initial slight rotation to already make it look 3D */
+      transform: rotateX(5deg) rotateY(-5deg) translateZ(0); 
     }
-    /* Add a subtle 3D tilt on hover */
     .id-card:hover {
-        transform: rotateX(4deg) rotateY(4deg) scale(1.02);
+        transform: rotateX(2deg) rotateY(2deg) scale(1.03) translateZ(20px); /* More pronounced hover effect */
+        box-shadow: 0 25px 70px rgba(0,0,0,0.5), 
+                    0 0 0 1px rgba(255,255,255,0.9) inset,
+                    0 -1px 0 1px rgba(0,0,0,0.15) inset,
+                    0 0 15px rgba(255,255,255,0.08) inset;
     }
     .tint {
       position: absolute;
@@ -50,6 +67,7 @@
                   linear-gradient(180deg, #f7fbff 0%, #ffffff 60%, #f4f8ff 100%);
       opacity: 0.9;
       z-index: 0;
+      transform: translateZ(1px); /* Slightly elevate tint */
     }
     .bg-pattern {
       position: absolute;
@@ -58,14 +76,21 @@
       opacity: 0.22;
       filter: contrast(1.1) saturate(1.05);
       z-index: 1;
+      transform: translateZ(2px); /* Elevate pattern */
     }
     .watermark {
       position: absolute;
       inset: 0;
-      background: url("images/watermark-example.png") center/72% no-repeat;
-      opacity: 0.24;
+      background: url("images/watermark-eagle.png") center/72% no-repeat; /* Changed to watermark-eagle.png */
+      opacity: 0.2; /* Adjusted for better visibility */
       mix-blend-mode: multiply;
       z-index: 2;
+      transform: translateZ(3px); /* Elevate watermark */
+      animation: pulse 4s infinite ease-in-out; /* Subtle pulsing animation */
+      transition: transform 0.3s ease;
+    }
+    .id-card:hover .watermark {
+        transform: translateZ(10px) scale(1.01); /* Watermark shifts slightly on hover */
     }
     .dod-seal {
       position: absolute;
@@ -73,7 +98,7 @@
       top: 116px;
       width: 120px;
       height: 120px;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateZ(4px); /* Elevated DOD seal */
       background: url("images/dod-seal.png") center/contain no-repeat;
       opacity: 0.20;
       filter: contrast(1.08);
@@ -88,6 +113,7 @@
       background: url("images/army-logo-jane.png") center/contain no-repeat;
       opacity: 0.88;
       z-index: 4;
+      transform: translateZ(6px); /* Elevated logo */
     }
     .hologram {
       position: absolute;
@@ -99,6 +125,8 @@
       opacity: 0.35;
       mix-blend-mode: screen;
       z-index: 5;
+      transform: translateZ(5px); /* Elevated hologram */
+      animation: hologram-pulse 5s infinite ease-in-out; /* Subtle hologram pulse */
     }
     .laminate-icon {
       position: absolute;
@@ -109,6 +137,7 @@
       background: url("images/laminate-icon.png") center/contain no-repeat;
       opacity: 0.92;
       z-index: 6;
+      transform: translateZ(7px); /* Elevated laminate icon */
     }
     .photo {
       position: absolute;
@@ -120,8 +149,13 @@
       overflow: hidden;
       background: #fff;
       border: 1px solid rgba(20,40,60,0.18);
-      box-shadow: 0 4px 14px rgba(16,32,48,0.12);
+      box-shadow: 0 6px 18px rgba(16,32,48,0.2), inset 0 0 0 1px rgba(255,255,255,0.7); /* Stronger shadow, inner highlight */
       z-index: 10;
+      transform: translateZ(8px); /* Significantly elevated photo */
+      transition: transform 0.3s ease;
+    }
+    .id-card:hover .photo {
+        transform: translateZ(12px) scale(1.01); /* Photo lifts more on hover */
     }
     .photo img {
       width: 100%;
@@ -136,7 +170,12 @@
       height: 36px;
       background: url("images/smart-chip.png") center/contain no-repeat;
       z-index: 10;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.28));
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.38)); /* Stronger drop shadow */
+      transform: translateZ(9px); /* Elevated chip */
+      transition: transform 0.3s ease;
+    }
+    .id-card:hover .chip {
+        transform: translateZ(14px) scale(1.02); /* Chip lifts more on hover */
     }
     .info {
       position: absolute;
@@ -146,6 +185,7 @@
       z-index: 10;
       color: #102030;
       line-height: 1.35em;
+      transform: translateZ(8px); /* Elevated text info */
     }
     .info .row {
       margin-bottom: 4px;
@@ -167,6 +207,7 @@
       width: 96px;
       height: 30px;
       z-index: 10;
+      transform: translateZ(8px); /* Elevated signature */
     }
     .signature img {
       width: 100%;
@@ -180,6 +221,7 @@
       width: 170px;
       height: 34px;
       z-index: 10;
+      transform: translateZ(8px); /* Elevated barcode */
     }
     .barcode img {
       width: 100%;
@@ -193,6 +235,7 @@
       width: 64px;
       height: 64px;
       z-index: 10;
+      transform: translateZ(8px); /* Elevated QR code */
     }
     .qr img {
       width: 100%;
@@ -205,18 +248,21 @@
       inset: 0;
       z-index: 20;
       pointer-events: none;
-      /* Enhanced glossy effect with stronger gradients for a plastic feel */
+      /* More dynamic and intense glossy effect for a true plastic laminate */
       background: 
-        radial-gradient(ellipse at 15% 15%, rgba(255,255,255,0.8), transparent 45%),
-        linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 60%, rgba(255,255,255,0.12) 100%);
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.9), transparent 50%), /* Stronger main highlight */
+        radial-gradient(circle at 90% 90%, rgba(255,255,255,0.7), transparent 60%), /* Secondary highlight */
+        linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.2) 100%);
       mix-blend-mode: screen;
-      transition: background 0.5s ease;
+      transform: translateZ(15px); /* Ensure gloss is on the very top layer */
+      transition: background 0.6s ease-out;
     }
-    /* Make the gloss move on hover to simulate light reflection */
+    /* Shift gloss on hover to simulate moving light source */
     .id-card:hover .gloss {
         background: 
-            radial-gradient(ellipse at 85% 85%, rgba(255,255,255,0.8), transparent 45%),
-            linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 60%, rgba(255,255,255,0.12) 100%);
+            radial-gradient(circle at 90% 10%, rgba(255,255,255,0.9), transparent 50%),
+            radial-gradient(circle at 10% 90%, rgba(255,255,255,0.7), transparent 60%),
+            linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.25) 100%);
     }
 
     .download-btn {
@@ -244,7 +290,7 @@
   <div class="id-card" id="id-card">
     <div class="tint"></div>
     <div class="bg-pattern"></div>
-    <div class="watermark"></div>
+    <div class="watermark"></div> 
     <div class="dod-seal"></div>
     <div class="army-logo"></div>
     <div class="hologram"></div>
@@ -286,15 +332,21 @@
   <script>
     function downloadCard() {
       const card = document.getElementById('id-card');
+      // Temporarily remove hover transforms to capture a flat image for download
+      card.style.transform = 'none'; 
       html2canvas(card, {
         allowTaint: true,
         useCORS: true,
-        backgroundColor: null
+        backgroundColor: null,
+        // Scale up for better resolution in download
+        scale: 2 
       }).then(function(canvas) {
         const link = document.createElement('a');
         link.download = 'jane-maunger-cac.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
+        // Reapply initial transform after capture
+        card.style.transform = 'rotateX(5deg) rotateY(-5deg) translateZ(0)';
       });
     }
   </script>
