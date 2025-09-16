@@ -108,50 +108,94 @@
       background-size: 280px 280px;
       mix-blend-mode: multiply;
       z-index: 7;
-    }</style>
-</head>
-<body>
-  <h1>Department of Defense – Common Access Card</h1>
-  <div class="id-card">
-    <div class="tint"></div>
-    <div class="bg-pattern"></div>
-    <div class="watermark"></div>
-    <div class="dod-seal"></div>
-    <div class="army-logo"></div>
-    <div class="hologram"></div>
-    <div class="laminate-icon"></div>
-    <div class="noise"></div>
-
-    <div class="photo">
-      <img src="images/jane.jpg" alt="Jane Maunger" />
-    </div>
-
-    <div class="chip"></div>
-
-    <div class="info">
-      <div class="row"><span class="label">Name:</span> <span class="value">JANE MAUNGER</span></div>
-      <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian Contractor</span></div>
-      <div class="row"><span class="label">Title:</span> <span class="value">Clinical Dietitian</span></div>
-      <div class="row"><span class="label">Department:</span> <span class="value">U.S. Army Medical Command</span></div>
-      <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
-      <div class="row"><span class="label">Expiration:</span> <span class="value">30 SEP 2027</span></div>
-      <div class="row"><span class="label">Privileges:</span> <span class="value">Facility Access Only</span></div>
-    </div>
-
-    <div class="signature">
-      <img src="images/signature-jane.png" alt="Signature" />
-    </div>
-
-    <div class="barcode">
-      <img src="images/barcode-jane.png" alt="Barcode" />
-    </div>
-
-    <div class="qr">
-      <img src="images/qr-jane.png" alt="QR Code" />
-    </div>
-
-    <div class="gloss"></div>
-  </div>
-</body>
-</html>
-        
+    }
+    .photo {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 96px;
+      height: 128px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid rgba(20,40,60,0.18);
+      box-shadow: 0 4px 14px rgba(16,32,48,0.12);
+      z-index: 8;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .chip {
+      position: absolute;
+      left: 24px;
+      top: 164px;
+      width: 50px;
+      height: 36px;
+      background: url("images/smart-chip.png") center/contain no-repeat;
+      z-index: 9;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.28));
+    }
+    .info {
+      position: absolute;
+      left: 132px;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      color: #102030;
+      line-height: 1.35em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.65);
+    }
+    .info .row {
+      margin-bottom: 4px;
+    }
+    .label {
+      font-weight: 700;
+      color: #2a3a52;
+      display: inline-block;
+      min-width: 120px;
+    }
+    .value {
+      font-weight: 600;
+      color: #102030;
+    }
+    .signature {
+      position: absolute;
+      left: 20px;
+      bottom: 16px;
+      width: 96px;
+      height: 30px;
+      z-index: 11;
+    }
+    .signature img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .barcode {
+      position: absolute;
+      left: 132px;
+      bottom: 16px;
+      width: 170px;
+      height: 34px;
+      z-index: 11;
+    }
+    .barcode img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .qr {
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      width: 64px;
+      height: 64px;
+      z-index: 11;
+    }
+    .qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 
