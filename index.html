@@ -199,11 +199,29 @@
                   radial-gradient(40% 30% at 90% 0%, rgba(255,255,255,0.22), transparent 60%);
       mix-blend-mode: screen;
     }
+    .download-btn {
+      margin-top: 24px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background: #1e90ff;
+      color: white;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.2s ease-in-out;
+    }
+    .download-btn:hover {
+      background: #1c86ee;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
   </style>
 </head>
 <body>
   <h1>Department of Defense – Common Access Card</h1>
-  <div class="id-card">
+  <div class="id-card" id="id-card">
     <div class="tint"></div>
     <div class="bg-pattern"></div>
     <div class="watermark"></div>
@@ -233,7 +251,7 @@
     </div>
 
     <div class="barcode">
-      <img src="images/barcode-example.png" alt="Barcode" />
+      <img src="images/barcode-jane.png" alt="Barcode" />
     </div>
 
     <div class="qr">
@@ -242,5 +260,23 @@
 
     <div class="gloss"></div>
   </div>
+  <button class="download-btn" onclick="downloadCard()">Download Card</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    function downloadCard() {
+      const card = document.getElementById('id-card');
+      html2canvas(card, {
+        allowTaint: true,
+        useCORS: true,
+        backgroundColor: null
+      }).then(function(canvas) {
+        const link = document.createElement('a');
+        link.download = 'jane-maunger-cac.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
 </body>
 </html>
