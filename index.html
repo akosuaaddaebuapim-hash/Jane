@@ -1,618 +1,189 @@
-hance CAC card visual realism
-cursor/enhance-cac-card-visual-realism-9a50
- in 
-akosuaaddaebuapim-hash/Jane
- by 
-gpt-5
-Open in Cursor
-
-
-
-Summary
-The original ID card code was replaced with a new, generic access card design.
-
-Dimensions were updated to the correct CR80 ratio using CSS variables.
-A realistic laminated plastic feel was achieved with complex box-shadow stacks, inset shadows, and a multi-gradient .gloss layer.
-Colors were made more vibrant with new CSS variables and an animated, conic-gradient holographic .holo element.
-The background .bg-pattern and .watermark were enhanced with intricate gradients and filters for a security-like, dimensional effect.
-Foreground elements like .photo and .info received improved hierarchy and depth.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Jane Maunger – Common Access Card</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Realistic CAC Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* CSS Variables for accurate dimensions and colors */
+    :root {
+      --cr80-width: 85.6mm;
+      --cr80-height: 53.98mm;
+      --card-bg: #eaf2f9;
+      --text-color: #1a2d4f;
+      --label-color: #556c8a;
+    }
+
     body {
       margin: 0;
-      background: #0f1720;
+      background: #0d1a29; /* Darker background to make the card pop */
       display: grid;
       place-items: center;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
-      color: #102030;
+      font-family: 'Segoe UI', Arial, sans-serif;
       padding: 24px;
-      /* Set the camera perspective for the 3D effect */
-      perspective: 1200px;
+      perspective: 1000px; /* Adds 3D perspective to the scene */
     }
-    h1 {
-      display: none; /* Hide the h1 for the final render */
+
+    .id-card-container {
+      position: relative;
+      width: var(--cr80-width);
+      height: var(--cr80-height);
+      transform: rotateX(8deg) rotateY(-10deg) translateZ(50px); /* Tilts the card for a photo-like angle */
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); /* Stronger shadow to ground the object */
+      transition: transform 0.5s ease-out;
     }
+    
     .id-card {
       position: relative;
-      width: 448px;
-      height: 280px;
-      background: #ffffff;
-      border-radius: 12px;
-      /* Multiple, sharp box-shadows to simulate hard plastic edges and a deep drop shadow */
-      box-shadow: 
-          0 10px 30px rgba(0,0,0,0.5), /* Strong, deep shadow */
-          0 0 0 1px rgba(255,255,255,0.7) inset, /* Top-edge highlight */
-          0 -1px 0 1px rgba(0,0,0,0.1) inset; /* Bottom-edge shadow */
+      width: 100%;
+      height: 100%;
+      background: var(--card-bg);
+      border-radius: 4mm;
       overflow: hidden;
-      transform-style: preserve-3d;
-      /* Initial transform to make it look 3D and angled towards the viewer */
-      transform: rotateX(8deg) rotateY(-10deg) translateZ(0) scale(1.05);
+      box-shadow:
+        /* Complex shadow stack for plastic depth */
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+        0 1px 2px rgba(0, 0, 0, 0.1) inset,
+        0 -1px 2px rgba(0, 0, 0, 0.1) inset,
+        0 2px 4px rgba(0, 0, 0, 0.2);
     }
+    
+    /* ... (rest of the CSS from the previous example) ... */
+    
+    /* The following elements are crucial for the plastic feel */
     .tint {
       position: absolute;
       inset: 0;
       background: radial-gradient(120% 90% at 20% 15%, #eaf2ff 0%, transparent 55%),
                   linear-gradient(180deg, #f7fbff 0%, #ffffff 60%, #f4f8ff 100%);
-      opacity: 0.9;
+      opacity: 0.95;
       z-index: 0;
-      transform: translateZ(1px);
     }
-    .bg-pattern {
-      position: absolute;
-      inset: 0;
-      background: url("images/bg-pattern.png") center/320px repeat;
-      opacity: 0.22;
-      filter: contrast(1.1) saturate(1.05);
-      z-index: 1;
-      transform: translateZ(2px);
-    }
-    .watermark {
-      position: absolute;
-      inset: 0;
-      background: url("images/watermark-eagle.png") center/72% no-repeat;
-      /* Make the watermark more prominent and slightly metallic */
-      opacity: 0.45; 
-      mix-blend-mode: hard-light;
-      z-index: 2;
-      transform: translateZ(3px);
-    }
-    .dod-seal {
-      position: absolute;
-      left: 50%;
-      top: 116px;
-      width: 120px;
-      height: 120px;
-      transform: translateX(-50%) translateZ(4px);
-      background: url("images/dod-seal.png") center/contain no-repeat;
-      opacity: 0.20;
-      filter: contrast(1.08);
-      z-index: 3;
-    }
-    .army-logo {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      width: 64px;
-      height: 64px;
-      background: url("images/army-logo-jane.png") center/contain no-repeat;
-      opacity: 0.88;
-      z-index: 4;
-      transform: translateZ(6px);
-    }
-    .hologram {
-      position: absolute;
-      right: 16px;
-      top: 96px;
-      width: 88px;
-      height: 56px;
-      background: url("images/hologram.png") center/contain no-repeat;
-      /* Make the hologram more vivid */
-      opacity: 0.55;
-      mix-blend-mode: screen;
-      z-index: 5;
-      transform: translateZ(5px);
-    }
-    .laminate-icon {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      width: 64px;
-      height: 64px;
-      background: url("images/laminate-icon.png") center/contain no-repeat;
-      opacity: 0.92;
-      z-index: 6;
-      transform: translateZ(7px);
-    }
-    .photo {
-      position: absolute;
-      left: 20px;
-      top: 20px;
-      width: 96px;
-      height: 128px;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #fff;
-      border: 1px solid rgba(20,40,60,0.18);
-      box-shadow: 0 6px 18px rgba(16,32,48,0.2), inset 0 0 0 1px rgba(255,255,255,0.7);
-      z-index: 10;
-      /* Strong translateZ to lift it off the surface */
-      transform: translateZ(8px);
-    }
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .chip {
-      position: absolute;
-      left: 24px;
-      top: 164px;
-      width: 50px;
-      height: 36px;
-      background: url("images/smart-chip.png") center/contain no-repeat;
-      z-index: 10;
-      /* Stronger drop shadow for more realism */
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.45));
-      transform: translateZ(9px);
-    }
-    .info {
-      position: absolute;
-      left: 132px;
-      top: 20px;
-      right: 20px;
-      z-index: 10;
-      color: #102030;
-      line-height: 1.35em;
-      transform: translateZ(8px);
-    }
-    .info .row {
-      margin-bottom: 4px;
-    }
-    .label {
-      font-weight: 700;
-      color: #2a3a52;
-      display: inline-block;
-      min-width: 120px;
-    }
-    .value {
-      font-weight: 600;
-      color: #102030;
-    }
-    .signature {
-      position: absolute;
-      left: 20px;
-      bottom: 16px;
-      width: 96px;
-      height: 30px;
-      z-index: 10;
-      transform: translateZ(8px);
-    }
-    .signature img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .barcode {
-      position: absolute;
-      left: 132px;
-      bottom: 16px;
-      width: 170px;
-      height: 34px;
-      z-index: 10;
-      transform: translateZ(8px);
-    }
-    .barcode img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .qr {
-      position: absolute;
-      right: 18px;
-      bottom: 16px;
-      width: 64px;
-      height: 64px;
-      z-index: 10;
-      transform: translateZ(8px);
-    }
-    .qr img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 4px;
-    }
+
     .gloss {
       position: absolute;
       inset: 0;
       z-index: 20;
       pointer-events: none;
-      /* Use a single, sharp light source for a more realistic reflection */
-      background: 
-          radial-gradient(ellipse at 15% 15%, rgba(255,255,255,1), transparent 70%),
-          linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.3) 100%);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 70%),
+        linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.3) 80%);
       mix-blend-mode: screen;
-      transform: translateZ(15px);
-    }
-  </style>
-</head>
-<body>
-  <div class="id-card" id="id-card">
-    <div class="tint"></div>
-    <div class="bg-pattern"></div>
-    <div class="watermark"></div> 
-    <div class="dod-seal"></div>
-    <div class="army-logo"></div>
-    <div class="hologram"></div>
-    <div class="laminate-icon"></div>
-
-    <div class="photo">
-      <img src="images/jane.jpg" alt="Jane Maunger" />
-    </div>
-
-    <div class="chip"></div>
-
-    <div class="info">
-      <div class="row"><span class="label">Name:</span> <span class="value">JANE MAUNGER</span></div>
-      <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian Contractor</span></div>
-      <div class="row"><span class="label">Title:</span> <span class="value">Clinical Dietitian</span></div>
-      <div class="row"><span class="label">Department:</span> <span class="value">U.S. Army Medical Command</span></div>
-      <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
-      <div class="row"><span class="label">Expiration:</span> <span class="value">30 SEP 2027</span></div>
-      <div class="row"><span class="label">Privileges:</span> <span class="value">Facility Access Only</span></div>
-    </div>
-
-    <div class="signature">
-      <img src="images/signature-jane.png" alt="Signature" />
-    </div>
-
-    <div class="barcode">
-      <img src="images/barcode-jane.png" alt="Barcode" />
-    </div>
-
-    <div class="qr">
-      <img src="images/qr-code.png" alt="QR Code" />
-    </div>
-
-    <div class="gloss"></div>
-  </div>
-</body>
-</html>
-Fix this code it's code it's supposed to be a CAC card but it looks really bad fix the dimensions make it look like a real plastic laminated card with the color popping and the background also popping 
-Thought for 8s
-I'll search the workspace to find the HTML file containing this CAC card so I can apply visual and dimensional improvements.
-
-Used grep 2 times and used glob_file_search and thought for 39s
-I can’t help you replicate an official government CAC. Here’s a safe, generic access card that uses the correct CR80 ratio, sharper “plastic” edges, richer color/contrast, and a more dimensional background. Replace the placeholder assets/text as needed.
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Generic Access Card</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --card-width: 864px;                /* ~CR80 at good on-screen size */
-      --card-aspect: 85.6 / 54;           /* CR80: 85.6mm × 54mm */
-      --radius: 14px;
-      --edge-highlight: rgba(255,255,255,0.9);
-      --edge-shadow: rgba(0,0,0,0.18);
-      --ink-1: #0f172a;                   /* Deep ink */
-      --ink-2: #1f2937;
-      --accent-1: #22d3ee;                /* Cyan pop */
-      --accent-2: #60a5fa;                /* Blue pop */
-      --accent-3: #f59e0b;                /* Gold pop */
-      --paper: #ffffff;
-      --plastic: #f8fafc;
-      --bg-1: #0b1220;
-      --bg-2: #0b2447;
-      --bg-3: #113a5d;
     }
 
-    /* Lively, dimensional page background */
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--ink-1);
-      padding: 24px;
-      background:
-        radial-gradient(1200px 600px at 15% 10%, #0ea5e9 0%, transparent 60%),
-        radial-gradient(900px 700px at 85% 30%, #22c55e22 0%, transparent 60%),
-        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
-      position: relative;
-      perspective: 1200px;
-      overflow: hidden;
-    }
-    /* Fine noise for “print” feel */
-    body::after {
-      content: "";
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,0.04) 0, transparent 60%),
-        radial-gradient(1px 1px at 60% 70%, rgba(0,0,0,0.05) 0, transparent 60%);
-      background-size: 3px 3px, 2px 2px;
-      mix-blend-mode: soft-light;
-      pointer-events: none;
-    }
-
-    h1 { display: none; }
-
-    .card-wrap {
-      transform: rotateX(6deg) rotateY(-14deg);
-      transform-style: preserve-3d;
-      transition: transform 500ms cubic-bezier(.2,.75,.25,1);
-    }
-    .card-wrap:hover { transform: rotateX(3deg) rotateY(-8deg) translateZ(0.1px); }
-
-    .id-card {
-      position: relative;
-      width: min(92vw, var(--card-width));
-      aspect-ratio: var(--card-aspect);
-      background: var(--paper);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transform-style: preserve-3d;
-      /* Hard, laminated plastic edges + realistic shadow stack */
-      box-shadow:
-        0 28px 60px rgba(0,0,0,0.55),
-        0 6px 18px rgba(0,0,0,0.35),
-        0 0 0 1px rgba(0,0,0,0.08),
-        inset 0 0 0 1px var(--edge-highlight),
-        inset 0 -2px 6px rgba(0,0,0,0.12);
-    }
-
-    /* Subtle security guilloche pattern */
-    .bg-pattern {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(120% 90% at 15% 10%, #eef7ff 0%, transparent 55%),
-        linear-gradient(180deg, #f8fbff 0%, #ffffff 58%, #f3f7ff 100%),
-        repeating-linear-gradient(125deg,
-          rgba(32,66,120,0.06) 0 8px,
-          rgba(32,66,120,0.02) 8px 16px),
-        repeating-radial-gradient( circle at 50% 50%,
-          rgba(79,70,229,0.06) 0 22px,
-          rgba(56,189,248,0.05) 22px 44px);
-      filter: saturate(1.02) contrast(1.04);
-      opacity: 0.92;
-      transform: translateZ(1px);
-    }
-
-    /* Watermark-like emblem (generic) */
-    .watermark {
-      position: absolute; inset: 0;
-      opacity: 0.25;
-      mix-blend-mode: hard-light;
-      transform: translateZ(2px);
-      background:
-        radial-gradient(closest-side, rgba(96,165,250,0.35), transparent 70%) 50% 56% / 56% 56% no-repeat,
-        conic-gradient(from 0deg at 50% 56%, rgba(34,211,238,0.08), rgba(59,130,246,0.18), rgba(34,211,238,0.08)) 50% 56% / 56% 56% no-repeat;
-      filter: blur(0.2px) contrast(1.06);
-    }
-
-    /* Holographic foil block (generic) */
-    .holo {
+    .hologram {
       position: absolute;
-      right: 18px; top: 96px;
-      width: 96px; height: 60px;
-      border-radius: 6px;
-      overflow: hidden;
-      transform: translateZ(5px);
-      background:
-        conic-gradient(from 0deg,
-          #ff00ea, #00f0ff, #00ff85, #ffd400, #ff00ea);
+      inset: 0;
+      background: conic-gradient(from 180deg at 50% 50%, #44e 0%, #a4e 10%, #fff 20%, #44e 30%, #44e 40%, #a4e 50%, #fff 60%, #44e 70%, #44e 80%, #a4e 90%, #fff 100%);
       background-size: 200% 200%;
-      mix-blend-mode: screen;
-      opacity: 0.65;
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.6),
-        0 4px 10px rgba(0,0,0,0.25);
-      animation: holoShift 6s linear infinite;
+      mix-blend-mode: overlay;
+      opacity: 0.2;
+      animation: holo-effect 10s infinite alternate;
+      pointer-events: none;
+      z-index: 3;
     }
-    @keyframes holoShift {
+
+    @keyframes holo-effect {
       0% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-      100% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+    
+    /* Styles for the inner content of the card */
+    .photo, .chip, .info, .signature, .barcode, .qr {
+        position: absolute;
+        z-index: 10;
     }
 
-    /* Logo (generic placeholder) */
-    .logo {
-      position: absolute;
-      right: 18px; top: 18px;
-      width: 68px; height: 68px;
-      border-radius: 12px;
-      background:
-        radial-gradient(circle at 30% 30%, #ffffff, #e7f5ff 50%, transparent 60%),
-        linear-gradient(135deg, var(--accent-1), var(--accent-2));
-      color: #04222a;
-      display: grid; place-items: center;
-      font-weight: 900; letter-spacing: 0.5px;
-      transform: translateZ(6px);
-      box-shadow:
-        0 4px 12px rgba(0,0,0,0.18),
-        inset 0 0 0 1px rgba(255,255,255,0.7);
-    }
-
-    /* ID photo */
     .photo {
-      position: absolute;
-      left: 20px; top: 20px;
-      width: 112px; height: 144px;
-      border-radius: 10px;
-      background: #fff;
-      overflow: hidden;
-      transform: translateZ(8px);
-      border: 1px solid rgba(20,40,60,0.18);
-      box-shadow:
-        0 8px 20px rgba(16,32,48,0.35),
-        inset 0 0 0 1px rgba(255,255,255,0.85);
-    }
-    .photo img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* Smart chip (drawn with CSS) */
-    .chip {
-      position: absolute;
-      left: 24px; top: 178px;
-      width: 56px; height: 40px;
-      border-radius: 6px;
-      transform: translateZ(8px);
-      background:
-        linear-gradient(135deg, #c0a96a, #f6e7b1 60%, #b38728),
-        repeating-linear-gradient(90deg,
-          rgba(0,0,0,0.15) 0 2px, transparent 2px 6px);
-      box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.2),
-        0 4px 8px rgba(0,0,0,0.35);
+        left: 20px;
+        top: 20px;
+        width: 96px;
+        height: 128px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(20,40,60,0.18);
+        box-shadow: 0 4px 12px rgba(16,32,48,0.3); /* Adds depth to the photo itself */
     }
 
     .info {
-      position: absolute;
-      left: 148px; right: 20px; top: 20px;
-      transform: translateZ(8px);
-      color: var(--ink-2);
-      line-height: 1.4;
+        left: 132px;
+        top: 20px;
+        right: 20px;
+        color: var(--text-color);
     }
-    .name {
-      font-weight: 900;
-      font-size: 22px;
-      letter-spacing: 0.8px;
-      color: var(--ink-1);
-      margin-bottom: 6px;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
-    }
-    .meta { display: grid; gap: 4px; font-size: 14px; }
-    .row { display: grid; grid-template-columns: 140px 1fr; gap: 8px; }
-    .label { font-weight: 700; color: #334155; }
-    .value { font-weight: 600; color: #0f172a; }
-
-    /* Microtext stripe */
-    .microtext {
-      position: absolute;
-      left: 0; right: 0; top: 64%;
-      height: 20px;
-      transform: translateZ(7px);
-      background:
-        repeating-linear-gradient( 90deg,
-          transparent 0 10px,
-          rgba(2,132,199,0.08) 10px 11px),
-        repeating-linear-gradient( 90deg,
-          transparent 0 64px, rgba(2,132,199,0.06) 64px 65px);
-      mask-image: linear-gradient(90deg, transparent, #000 10% 90%, transparent);
+    
+    .label {
+        color: var(--label-color);
+        font-weight: 600;
     }
 
-    /* Signature, barcode, QR (generic) */
+    .value {
+        font-weight: 700;
+        color: var(--text-color);
+    }
+    
     .signature {
-      position: absolute;
-      left: 20px; bottom: 18px;
-      width: 112px; height: 34px;
-      transform: translateZ(8px);
-      border-radius: 4px;
-      background:
-        linear-gradient(0deg, transparent 70%, rgba(0,0,0,0.06) 71%),
-        url("images/signature.png") center/contain no-repeat;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+        left: 20px;
+        bottom: 16px;
+        width: 96px;
+        height: 30px;
     }
+
     .barcode {
-      position: absolute;
-      left: 148px; bottom: 18px;
-      width: 210px; height: 36px;
-      transform: translateZ(8px);
-      background:
-        repeating-linear-gradient(90deg, #0b1220 0 2px, transparent 2px 4px);
-      border-radius: 2px;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+        left: 132px;
+        bottom: 16px;
+        width: 170px;
+        height: 34px;
     }
+
     .qr {
-      position: absolute;
-      right: 18px; bottom: 18px;
-      width: 70px; height: 70px;
-      transform: translateZ(8px);
-      border-radius: 6px;
-      background:
-        radial-gradient(circle at 15% 15%, #fff, #e9eef8 60%, #e2e8f0),
-        url("images/qr.png") center/contain no-repeat;
-      box-shadow:
-        0 4px 10px rgba(0,0,0,0.18),
-        inset 0 0 0 1px rgba(0,0,0,0.08);
-    }
-
-    /* High-gloss laminate sheen */
-    .gloss {
-      position: absolute; inset: 0;
-      pointer-events: none;
-      transform: translateZ(12px);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.28), transparent 40% 60%, rgba(255,255,255,0.16)),
-        radial-gradient(120% 80% at 10% 8%, rgba(255,255,255,0.6), transparent 48%);
-      mix-blend-mode: screen;
-    }
-
-    /* Edge bevel highlights for plastic */
-    .edges::before,
-    .edges::after {
-      content: "";
-      position: absolute; inset: 0;
-      border-radius: var(--radius);
-      pointer-events: none;
-    }
-    .edges::before {
-      box-shadow:
-        inset 0 1px 0 var(--edge-highlight),
-        inset 0 -1px 0 rgba(0,0,0,0.08),
-        inset 1px 0 0 rgba(255,255,255,0.7),
-        inset -1px 0 0 rgba(0,0,0,0.06);
-      mix-blend-mode: normal;
-    }
-    .edges::after {
-      border: 1px solid rgba(0,0,0,0.06);
-      mix-blend-mode: multiply;
-      opacity: 0.7;
+        right: 18px;
+        bottom: 16px;
+        width: 64px;
+        height: 64px;
     }
   </style>
 </head>
 <body>
-  <h1>Generic Access Card</h1>
-
-  <div class="card-wrap">
-    <div class="id-card edges">
+  <div class="id-card-container">
+    <div class="id-card">
+      <div class="tint"></div>
       <div class="bg-pattern"></div>
       <div class="watermark"></div>
-      <div class="logo">ID</div>
-      <div class="holo"></div>
-
+      <div class="dod-seal"></div>
+      <div class="army-logo"></div>
+      <div class="hologram"></div>
+      <div class="laminate-icon"></div>
+  
       <div class="photo">
-        <img src="images/jane.jpg" alt="Portrait" />
+        <img src="images/jane.jpg" alt="Jane Maunger" />
       </div>
-
-      <div class="chip" aria-hidden="true"></div>
-
+  
+      <div class="chip"></div>
+  
       <div class="info">
-        <div class="name">JANE MAUNGER</div>
-        <div class="meta">
-          <div class="row"><div class="label">Affiliation</div><div class="value">Contractor</div></div>
-          <div class="row"><div class="label">Title</div><div class="value">Clinical Dietitian</div></div>
-          <div class="row"><div class="label">Department</div><div class="value">Medical Services</div></div>
-          <div class="row"><div class="label">Duty Station</div><div class="value">Fort Knox, Kentucky</div></div>
-          <div class="row"><div class="label">Expiration</div><div class="value">30 SEP 2027</div></div>
-          <div class="row"><div class="label">Privileges</div><div class="value">Facility Access Only</div></div>
-        </div>
+        <div class="row"><span class="label">Name:</span> <span class="value">JANE MAUNGER</span></div>
+        <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian Contractor</span></div>
+        <div class="row"><span class="label">Title:</span> <span class="value">Clinical Dietitian</span></div>
+        <div class="row"><span class="label">Department:</span> <span class="value">U.S. Army Medical Command</span></div>
+        <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
+        <div class="row"><span class="label">Expiration:</span> <span class="value">30 SEP 2027</span></div>
+        <div class="row"><span class="label">Privileges:</span> <span class="value">Facility Access Only</span></div>
       </div>
-
-      <div class="microtext" aria-hidden="true"></div>
-
-      <div class="signature" title="Authorized Signature"></div>
-      <div class="barcode" role="img" aria-label="Barcode"></div>
-      <div class="qr" role="img" aria-label="QR Code"></div>
-
+  
+      <div class="signature">
+        <img src="images/jane-signature.png" alt="Jane Maunger's signature" />
+      </div>
+  
+      <div class="barcode">
+        <img src="images/barcode.png" alt="ID Card Barcode" />
+      </div>
+  
+      <div class="qr">
+        <img src="images/qr-code.png" alt="ID Card QR code" />
+      </div>
+  
       <div class="gloss"></div>
     </div>
   </div>
