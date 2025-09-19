@@ -1,269 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Realistic CAC Card</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>Jane Maunger – Passport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* CSS Variables for accurate dimensions and colors */
-    :root {
-      --cr80-width: 85.6mm;
-      --cr80-height: 53.98mm;
-      --card-bg: #eaf2f9;
-      --text-color: #1a2d4f;
-      --label-color: #556c8a;
-    }
-
     body {
       margin: 0;
-      background: linear-gradient(145deg, #0f1720, #1c2a3a);
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
+      background: #e6edf5;
       font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .passport {
+      width: 720px;
+      height: 480px;
+      background: url("images/passport-background.png") center/cover no-repeat;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
       padding: 24px;
-    }
-
-    .id-card {
       position: relative;
-      width: 540px; /* Maintains the original pixel dimensions for visual consistency */
-      height: 340px;
-      background: var(--card-bg);
-      border-radius: 12px;
       overflow: hidden;
-      box-shadow:
-        /* Complex shadow stack for plastic depth and realism */
-        0 4px 12px rgba(0, 0, 0, 0.2),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 2px rgba(255, 255, 255, 0.5);
     }
-
-    /* All inner elements are correctly positioned and sized */
-    .tint {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(120% 90% at 20% 15%, #eaf2ff 0%, transparent 55%),
-                  linear-gradient(180deg, #f7fbff 0%, #ffffff 60%, #f4f8ff 100%);
-      opacity: 0.95;
-      z-index: 0;
+    .header {
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #1a2d4f;
+      margin-bottom: 12px;
     }
-
-    .bg-pattern, .watermark {
-      position: absolute;
-      inset: 0;
-      opacity: 0.3;
-      filter: contrast(1.2) saturate(1.2);
-      z-index: 1;
-    }
-
-    .bg-pattern {
-      background: url("images/bg-pattern.png") center/280px repeat;
-    }
-
-    .watermark {
-      background: url("images/watermark-example.png") center/72% no-repeat;
-      opacity: 0.28;
-      mix-blend-mode: multiply;
-      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
-    }
-
-    .hologram {
-      position: absolute;
-      inset: 0;
-      background: conic-gradient(from 180deg at 50% 50%, #44e 0%, #a4e 10%, #fff 20%, #44e 30%, #44e 40%, #a4e 50%, #fff 60%, #44e 70%, #44e 80%, #a4e 90%, #fff 100%);
-      background-size: 200% 200%;
-      mix-blend-mode: overlay;
-      opacity: 0.2;
-      animation: holo-effect 10s infinite alternate;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    @keyframes holo-effect {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
-    }
-
-    .dod-seal, .army-logo, .laminate-icon {
-      position: absolute;
-      z-index: 4;
-      background-size: contain;
-      background-repeat: no-repeat;
-      opacity: 0.9;
-    }
-
-    .dod-seal {
-      left: 50%;
-      top: 120px;
-      width: 120px;
-      height: 120px;
-      transform: translateX(-50%);
-      background-image: url("images/dod-seal.png");
-      opacity: 0.22;
-      filter: contrast(1.08);
-    }
-
-    .army-logo {
-      right: 20px;
-      top: 20px;
-      width: 64px;
-      height: 64px;
-      background-image: url("images/army-logo-jane.png");
-    }
-
-    .laminate-icon {
-      right: 20px;
-      top: 20px;
-      width: 64px;
-      height: 64px;
-      background-image: url("images/laminate-icon.png");
-      opacity: 0.95;
-      mix-blend-mode: screen;
-    }
-
     .photo {
       position: absolute;
-      left: 20px;
-      top: 20px;
-      width: 96px;
-      height: 128px;
-      border-radius: 8px;
-      overflow: hidden;
+      left: 24px;
+      top: 80px;
+      width: 140px;
+      height: 180px;
+      border: 1px solid #333;
       background: #fff;
-      border: 1px solid rgba(20, 40, 60, 0.18);
-      box-shadow: 0 6px 18px rgba(16, 32, 48, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
-      z-index: 10;
+      overflow: hidden;
     }
-
     .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
-    .chip {
+    .details {
       position: absolute;
-      left: 24px;
-      top: 164px;
-      width: 50px;
-      height: 36px;
-      background: url("images/smart-chip.png") center/contain no-repeat;
-      z-index: 10;
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+      left: 180px;
+      top: 80px;
+      right: 24px;
+      font-size: 0.95em;
+      line-height: 1.6em;
+      color: #102030;
     }
-
-    .info {
-      position: absolute;
-      left: 132px;
-      top: 20px;
-      right: 20px;
-      z-index: 10;
-      color: var(--text-color);
-      line-height: 1.4em;
-    }
-
-    .info .row {
+    .details .row {
       margin-bottom: 6px;
     }
-
     .label {
-      font-weight: 700;
-      color: var(--label-color);
+      font-weight: bold;
+      color: #1a2d4f;
       display: inline-block;
-      min-width: 120px;
+      min-width: 140px;
     }
-
     .value {
-      font-weight: 600;
-      color: var(--text-color);
+      font-weight: 500;
+      color: #102030;
     }
-
-    .signature, .barcode, .qr {
-      position: absolute;
-      bottom: 16px;
-      z-index: 10;
-    }
-
     .signature {
-      left: 20px;
-      width: 96px;
-      height: 30px;
-    }
-
-    .barcode {
-      left: 132px;
-      width: 170px;
-      height: 34px;
-    }
-
-    .qr {
-      right: 18px;
-      width: 64px;
-      height: 64px;
-    }
-
-    .signature img, .barcode img, .qr img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .qr img {
-      border-radius: 4px;
-    }
-
-    .gloss {
       position: absolute;
-      inset: 0;
-      z-index: 20;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4), transparent 70%),
-        linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.2) 80%);
-      mix-blend-mode: screen;
+      bottom: 24px;
+      right: 24px;
+      font-family: 'Brush Script MT', cursive;
+      font-size: 1.2em;
+      color: #1a2d4f;
+    }
+    .mrz {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-family: 'OCR-B', monospace;
+      font-size: 0.85em;
+      background: #fff;
+      padding: 8px 16px;
+      border-top: 1px solid #ccc;
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <div class="id-card">
-    <div class="tint"></div>
-    <div class="bg-pattern"></div>
-    <div class="watermark"></div>
-    <div class="dod-seal"></div>
-    <div class="army-logo"></div>
-    <div class="hologram"></div>
-    <div class="laminate-icon"></div>
-  
+  <div class="passport">
+    <div class="header">UNITED STATES OF AMERICA</div>
+
     <div class="photo">
-      <img src="images/jane.jpg" alt="Jane Maunger" />
+      <img src="images/jane-photo.jpg" alt="Jane Maunger" />
     </div>
-  
-    <div class="chip"></div>
-  
-    <div class="info">
-      <div class="row"><span class="label">Name:</span> <span class="value">JANE MAUNGER</span></div>
-      <div class="row"><span class="label">Affiliation:</span> <span class="value">Civilian Contractor</span></div>
-      <div class="row"><span class="label">Title:</span> <span class="value">Clinical Dietitian</span></div>
-      <div class="row"><span class="label">Department:</span> <span class="value">U.S. Army Medical Command</span></div>
-      <div class="row"><span class="label">Duty Station:</span> <span class="value">Fort Knox, Kentucky</span></div>
-      <div class="row"><span class="label">Expiration:</span> <span class="value">30 SEP 2027</span></div>
-      <div class="row"><span class="label">Privileges:</span> <span class="value">Facility Access Only</span></div>
+
+    <div class="details">
+      <div class="row"><span class="label">Document Type:</span> <span class="value">P</span></div>
+      <div class="row"><span class="label">Country Code:</span> <span class="value">USA</span></div>
+      <div class="row"><span class="label">Passport No:</span> <span class="value">987654321</span></div>
+      <div class="row"><span class="label">Surname:</span> <span class="value">MAUNGER</span></div>
+      <div class="row"><span class="label">Given Names:</span> <span class="value">JANE ELIZABETH</span></div>
+      <div class="row"><span class="label">Nationality:</span> <span class="value">UNITED STATES OF AMERICA</span></div>
+      <div class="row"><span class="label">Date of Birth:</span> <span class="value">12 MAR 1967</span></div>
+      <div class="row"><span class="label">Place of Birth:</span> <span class="value">BONN, GERMANY</span></div>
+      <div class="row"><span class="label">Sex:</span> <span class="value">F</span></div>
+      <div class="row"><span class="label">Date of Issue:</span> <span class="value">19 SEP 2025</span></div>
+      <div class="row"><span class="label">Date of Expiry:</span> <span class="value">19 SEP 2035</span></div>
+      <div class="row"><span class="label">Authority:</span> <span class="value">U.S. DEPARTMENT OF STATE</span></div>
     </div>
-  
-    <div class="signature">
-      <img src="images/jane-signature.png" alt="Jane Maunger's signature" />
+
+    <div class="signature">J. Maunger</div>
+
+    <div class="mrz">
+      P&lt;USA&lt;MAUNGER&lt;&lt;JANE&lt;ELIZABETH<br />
+      987654321F6703121USA2509194&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;4
     </div>
-  
-    <div class="barcode">
-      <img src="images/barcode.png" alt="ID Card Barcode" />
-    </div>
-  
-    <div class="qr">
-      <img src="images/qr-code.png" alt="ID Card QR code" />
-    </div>
-  
-    <div class="gloss"></div>
   </div>
 </body>
 </html>
