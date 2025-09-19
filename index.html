@@ -2,123 +2,245 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jane Maunger – Passport</title>
+  <title>Jane Maunger — Passport-Style Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      margin: 0;
-      background: #e6edf5;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+    :root{
+      --ink:#16233b;
+      --ink-2:#213a63;
+      --paper:#f7fbff;
+      --accent:#7aa7d9;
+      --line:#c8d7ea;
+      --warn:#b43f3f;
     }
-    .passport {
-      width: 720px;
-      height: 480px;
-      background: url("images/passport-background.png") center/cover no-repeat;
-      border: 1px solid #ccc;
-      box-shadow: 0 0 12px rgba(0,0,0,0.3);
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; display:grid; place-items:center;
+      background: radial-gradient(120% 100% at 20% 0%, #e9f1fb 0%, #d8e6f8 40%, #cfe0f4 100%);
+      font-family: "Segoe UI", Arial, sans-serif; color:var(--ink);
+      padding:24px;
     }
-    .header {
-      text-align: center;
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #1a2d4f;
-      margin-bottom: 12px;
+    .book{
+      width: 880px; max-width: 96vw; aspect-ratio: 16/9;
+      background: linear-gradient(90deg, #e4edf9 0%, #f0f6ff 50%, #e4edf9 100%);
+      border-radius: 14px; box-shadow: 0 10px 28px rgba(0,0,0,.18);
+      position: relative; overflow: hidden; padding: 22px 26px;
     }
-    .photo {
-      position: absolute;
-      left: 24px;
-      top: 80px;
-      width: 140px;
-      height: 180px;
-      border: 1px solid #333;
-      background: #fff;
-      overflow: hidden;
+    .not-gov{
+      position:absolute; inset: 0; pointer-events:none;
+      background:
+        repeating-linear-gradient(25deg, transparent 0 160px, rgba(180,63,63,0.06) 160px 220px),
+        repeating-linear-gradient(-25deg, transparent 0 160px, rgba(180,63,63,0.06) 160px 220px);
     }
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .spine{
+      position:absolute; left:50%; top:0; bottom:0; width:2px; background: #c3d2ea;
+      box-shadow: 0 0 0 1px #d4e0f2, inset 0 0 10px rgba(0,0,0,0.08);
     }
-    .details {
-      position: absolute;
-      left: 180px;
-      top: 80px;
-      right: 24px;
-      font-size: 0.95em;
-      line-height: 1.6em;
-      color: #102030;
+
+    .page{
+      position:absolute; top:20px; bottom:20px; width:calc(50% - 30px);
+      background: var(--paper);
+      border:1px solid #d7e5f6; border-radius: 10px;
+      overflow:hidden;
     }
-    .details .row {
-      margin-bottom: 6px;
+    .left{ left:20px; padding:18px; }
+    .right{ right:20px; padding:18px; }
+
+    /* Subtle faux-guilloche */
+    .page::before{
+      content:"";
+      position:absolute; inset:0; opacity:.18; pointer-events:none;
+      background:
+        radial-gradient(1200px 600px at 30% 30%, #91b5de 0%, transparent 60%),
+        repeating-radial-gradient(circle at 70% 50%, transparent 0 10px, #b9ccec 10px 12px),
+        repeating-linear-gradient(90deg, transparent 0 22px, #e6eef9 22px 23px);
+      mix-blend-mode: multiply;
     }
-    .label {
-      font-weight: bold;
-      color: #1a2d4f;
-      display: inline-block;
-      min-width: 140px;
+
+    .header{
+      display:flex; align-items:center; gap:12px; margin-bottom:16px;
     }
-    .value {
-      font-weight: 500;
-      color: #102030;
+    .crest{
+      width:54px; height:54px; border-radius:50%;
+      background: conic-gradient(from 0deg, #8fb2de, #c3d9f1, #8fb2de);
+      box-shadow: inset 0 0 10px rgba(0,0,0,.08);
     }
-    .signature {
-      position: absolute;
-      bottom: 24px;
-      right: 24px;
-      font-family: 'Brush Script MT', cursive;
-      font-size: 1.2em;
-      color: #1a2d4f;
+    .title{
+      font-weight:800; letter-spacing:.08em; color:var(--ink-2);
+      text-transform: uppercase; font-size: 14px;
     }
-    .mrz {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      font-family: 'OCR-B', monospace;
-      font-size: 0.85em;
-      background: #fff;
-      padding: 8px 16px;
-      border-top: 1px solid #ccc;
-      color: #000;
+    .subtitle{
+      font-size:11px; color:#3f5a89; opacity:.8; letter-spacing:.08em;
+    }
+
+    .photo{
+      width: 180px; height: 220px; border:1px solid var(--line);
+      border-radius:8px; overflow:hidden; background:#fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.7);
+    }
+    .photo img{ width:100%; height:100%; object-fit:cover; }
+
+    .grid{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px 18px; margin-top:12px;
+    }
+    .field{ font-size:13px; }
+    .label{ display:block; font-size:11px; letter-spacing:.06em; color:#3a5586; text-transform:uppercase; margin-bottom:2px; }
+    .value{ font-weight:600; color:#0e1e33; }
+
+    .full{
+      grid-column: 1 / -1;
+    }
+
+    .sign{
+      margin-top:16px; padding-top:8px; border-top:1px dashed #c8d7ea;
+    }
+    .sigline{
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: 20px; color:#1c335a;
+    }
+
+    .note{
+      position:absolute; left:18px; bottom:16px;
+      font-size:10px; color:#2b4066; opacity:.7;
+    }
+    .warning{
+      position:absolute; right:18px; bottom:16px; font-size:10px;
+      color: var(--warn); font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    }
+
+    /* Gloss */
+    .gloss{
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        linear-gradient(5deg, rgba(255,255,255,.0) 70%, rgba(255,255,255,.18) 100%),
+        radial-gradient(600px 200px at 30% -40%, rgba(255,255,255,.25), transparent 60%);
+      mix-blend-mode: screen;
+    }
+
+    /* Right page sections */
+    .section{
+      background: rgba(255,255,255,.65);
+      border:1px solid #d7e5f6; border-radius:8px; padding:12px; margin-bottom:12px;
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .section h4{
+      margin:0 0 8px 0; font-size:12px; color:#28436e; letter-spacing:.06em; text-transform:uppercase;
+    }
+    .row{ display:flex; gap:10px; font-size:13px; margin:4px 0; }
+    .row b{ min-width:140px; color:#2b4066; font-weight:700; }
+    .row span{ color:#0f223a; font-weight:600; }
+
+    .watermark{
+      position:absolute; inset:24px; pointer-events:none; opacity:.05;
+      background:
+        radial-gradient(200px 140px at 70% 65%, #2b6cb0, transparent 70%),
+        radial-gradient(220px 160px at 30% 35%, #2b6cb0, transparent 75%);
+      filter: blur(8px) saturate(1.2);
+      border-radius: 8px;
+    }
+
+    /* “Not a government document” ribbon */
+    .ribbon{
+      position:absolute; top:14px; right:-40px; transform: rotate(20deg);
+      background: #f6d6d6; color:#7a2a2a; border:1px solid #e6b3b3;
+      padding:6px 18px; font-size:11px; font-weight:700; letter-spacing:.04em;
+      text-transform: uppercase; box-shadow: 0 3px 10px rgba(0,0,0,.08);
+    }
+
+    @media (max-width: 720px){
+      .book{ aspect-ratio:auto; height:auto; padding:16px; }
+      .page{ position:relative; width:100%; left:auto; right:auto; top:auto; bottom:auto; margin:10px 0; }
+      .spine{ display:none; }
     }
   </style>
 </head>
 <body>
-  <div class="passport">
-    <div class="header">UNITED STATES OF AMERICA</div>
+  <div class="book" aria-label="Passport-style character profile (not a government document)">
+    <div class="ribbon">Not a government document</div>
+    <div class="not-gov"></div>
+    <div class="spine" aria-hidden="true"></div>
 
-    <div class="photo">
-      <img src="images/jane-photo.jpg" alt="Jane Maunger" />
+    <div class="page left">
+      <div class="header">
+        <div class="crest" aria-hidden="true"></div>
+        <div>
+          <div class="title">Travel profile</div>
+          <div class="subtitle">Character document — for storytelling use only</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="photo" aria-label="Portrait">
+          <img src="images/jane-photo.jpg" alt="Portrait of Jane Maunger" />
+        </div>
+
+        <div style="flex:1;">
+          <div class="grid">
+            <div class="field">
+              <span class="label">Name</span>
+              <span class="value">Jane Maunger</span>
+            </div>
+
+            <div class="field">
+              <span class="label">Role</span>
+              <span class="value">Clinical Dietitian</span>
+            </div>
+
+            <div class="field">
+              <span class="label">Birthplace</span>
+              <span class="value">Bonn, Germany</span>
+            </div>
+
+            <div class="field">
+              <span class="label">Residence</span>
+              <span class="value">Fort Knox, Kentucky</span>
+            </div>
+
+            <div class="field full">
+              <span class="label">Biography</span>
+              <span class="value">Middle-parted grey hair, years of service and resolve; a steady hand through long nights on duty.</span>
+            </div>
+          </div>
+
+          <div class="sign">
+            <div class="label">Signature</div>
+            <div class="sigline">J. Maunger</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">Design motif inspired by travel documents for narrative use.</div>
     </div>
 
-    <div class="details">
-      <div class="row"><span class="label">Document Type:</span> <span class="value">P</span></div>
-      <div class="row"><span class="label">Country Code:</span> <span class="value">USA</span></div>
-      <div class="row"><span class="label">Passport No:</span> <span class="value">987654321</span></div>
-      <div class="row"><span class="label">Surname:</span> <span class="value">MAUNGER</span></div>
-      <div class="row"><span class="label">Given Names:</span> <span class="value">JANE ELIZABETH</span></div>
-      <div class="row"><span class="label">Nationality:</span> <span class="value">UNITED STATES OF AMERICA</span></div>
-      <div class="row"><span class="label">Date of Birth:</span> <span class="value">12 MAR 1967</span></div>
-      <div class="row"><span class="label">Place of Birth:</span> <span class="value">BONN, GERMANY</span></div>
-      <div class="row"><span class="label">Sex:</span> <span class="value">F</span></div>
-      <div class="row"><span class="label">Date of Issue:</span> <span class="value">19 SEP 2025</span></div>
-      <div class="row"><span class="label">Date of Expiry:</span> <span class="value">19 SEP 2035</span></div>
-      <div class="row"><span class="label">Authority:</span> <span class="value">U.S. DEPARTMENT OF STATE</span></div>
+    <div class="page right">
+      <div class="watermark" aria-hidden="true"></div>
+
+      <div class="section">
+        <h4>Document summary</h4>
+        <div class="row"><b>Document type:</b> <span>Profile booklet (non-official)</span></div>
+        <div class="row"><b>Issued for:</b> <span>Storyworld: Jane Maunger</span></div>
+        <div class="row"><b>Validity:</b> <span>Narrative only</span></div>
+      </div>
+
+      <div class="section">
+        <h4>Identifiers</h4>
+        <div class="row"><b>Character ID:</b> <span>JM-670312</span></div>
+        <div class="row"><b>Department:</b> <span>Medical Services</span></div>
+        <div class="row"><b>Privileges:</b> <span>Facility Access (Fictional)</span></div>
+      </div>
+
+      <div class="section">
+        <h4>Travel notes</h4>
+        <div class="row"><b>Origins:</b> <span>Bonn — to the States as a child</span></div>
+        <div class="row"><b>Service arc:</b> <span>Clinical nutrition, high-stress posts</span></div>
+        <div class="row"><b>Mood:</b> <span>Worn yet unwavering</span></div>
+      </div>
+
+      <div class="warning">For storytelling and design practice — not valid ID</div>
     </div>
 
-    <div class="signature">J. Maunger</div>
-
-    <div class="mrz">
-      P&lt;USA&lt;MAUNGER&lt;&lt;JANE&lt;ELIZABETH<br />
-      987654321F6703121USA2509194&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;4
-    </div>
+    <div class="gloss" aria-hidden="true"></div>
   </div>
 </body>
 </html>
